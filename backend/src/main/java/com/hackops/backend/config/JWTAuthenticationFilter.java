@@ -1,6 +1,7 @@
 package com.hackops.backend.config;
 
 import com.hackops.backend.service.JWTService;
+import com.hackops.backend.service.MyUserDetailsService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

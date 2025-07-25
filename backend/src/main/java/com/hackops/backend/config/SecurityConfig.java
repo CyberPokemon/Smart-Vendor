@@ -1,5 +1,6 @@
 package com.hackops.backend.config;
 
+import com.hackops.backend.service.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
