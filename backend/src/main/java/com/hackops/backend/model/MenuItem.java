@@ -15,30 +15,37 @@ public class MenuItem {
 
     private String foodName;
 
+    private String foodType;
+
+    private double price;
+
     @ElementCollection
     @CollectionTable(name = "menu_ingredients", joinColumns = @JoinColumn(name = "menu_item_id"))
-    @Column(name = "ingredient_name")
-    private List<String> ingredientNames = new ArrayList<>();
+    private List<Ingredient> ingredientNames = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private Users user;
 
-    public MenuItem(Long id, String foodName, List<String> ingredientNames, Users user) {
+
+    public MenuItem(Long id, String foodName, String foodType, double price, List<Ingredient> ingredientNames, Users user) {
         this.id = id;
         this.foodName = foodName;
+        this.foodType = foodType;
+        this.price = price;
         this.ingredientNames = ingredientNames;
         this.user = user;
     }
 
-    public MenuItem(Users user, List<String> ingredientNames, String foodName) {
-        this.user = user;
-        this.ingredientNames = ingredientNames;
+    public MenuItem(String foodName, String foodType, double price, List<Ingredient> ingredientNames, Users user) {
         this.foodName = foodName;
+        this.foodType = foodType;
+        this.price = price;
+        this.ingredientNames = ingredientNames;
+        this.user = user;
     }
 
     public MenuItem() {
-
     }
 
     public Long getId() {
@@ -57,11 +64,19 @@ public class MenuItem {
         this.foodName = foodName;
     }
 
-    public List<String> getIngredientNames() {
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public List<Ingredient> getIngredientNames() {
         return ingredientNames;
     }
 
-    public void setIngredientNames(List<String> ingredientNames) {
+    public void setIngredientNames(List<Ingredient> ingredientNames) {
         this.ingredientNames = ingredientNames;
     }
 
@@ -71,5 +86,13 @@ public class MenuItem {
 
     public void setUser(Users user) {
         this.user = user;
+    }
+
+    public String getFoodType() {
+        return foodType;
+    }
+
+    public void setFoodType(String foodType) {
+        this.foodType = foodType;
     }
 }

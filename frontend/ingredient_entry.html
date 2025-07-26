@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vendor Ingredient Entry</title>
+  <link rel="stylesheet" href="ingredient_entry.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Vendor Ingredient Entry</h1>
+
+    <form id="ingredientForm">
+      <div id="ingredientList"></div>
+
+      <button type="button" onclick="addIngredient()">Add Ingredient</button>
+      <button type="button" onclick="submitIngredients()">Submit</button>
+    </form>
+
+    <div id="successMessage" class="hidden">
+      <h2>Ingredients Submitted Successfully ✅</h2>
+    </div>
+  </div>
+
+  <script src="ingredient_entry.js"></script>
+</body>
+</html>

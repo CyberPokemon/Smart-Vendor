@@ -5,22 +5,31 @@ public class RegisterRequestDTO {
     private String username;
     private String name;
     private String email;
+    private String businessname;
     private String address;
-    private String city;
-    private String state;
-    private int pincode;
     private String password;
     private String role;
 
 
-    public RegisterRequestDTO(String username, String name, String email, String address, String city, String state, int pincode, String password, String role) {
+//    public RegisterRequestDTO(String username, String name, String email, String address, String city, String state, int pincode, String password, String role) {
+//        this.username = username;
+//        this.name = name;
+//        this.email = email;
+//        this.address = address;
+//        this.city = city;
+//        this.state = state;
+//        this.pincode = pincode;
+//        this.password = password;
+//        this.role = role;
+//    }
+
+
+    public RegisterRequestDTO(String username, String name, String email, String businessname, String address, String password, String role) {
         this.username = username;
         this.name = name;
         this.email = email;
+        this.businessname = businessname;
         this.address = address;
-        this.city = city;
-        this.state = state;
-        this.pincode = pincode;
         this.password = password;
         this.role = role;
     }
@@ -60,7 +69,7 @@ public class RegisterRequestDTO {
         this.address = address;
     }
 
-    public String getCity() {
+    /*public String getCity() {
         return city;
     }
 
@@ -82,7 +91,7 @@ public class RegisterRequestDTO {
 
     public void setPincode(int pincode) {
         this.pincode = pincode;
-    }
+    }*/
 
     public String getPassword() {
         return password;
@@ -98,5 +107,13 @@ public class RegisterRequestDTO {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getBusinessname() {
+        return businessname;
+    }
+
+    public void setBusinessname(String businessname) {
+        this.businessname = businessname;
     }
 }
