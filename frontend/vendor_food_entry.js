@@ -328,6 +328,45 @@ function submitAllData() {
   showPreview(allData);
 }
 
+// function showPreview(data) {
+//   const container = document.querySelector(".container");
+//   const previewDiv = document.createElement("div");
+//   previewDiv.id = "previewDiv";
+
+//   const heading = document.createElement("h2");
+//   heading.textContent = "Preview Your Submission";
+//   heading.style.margin = "20px 0";
+//   container.appendChild(heading);
+
+//   data.forEach((item, idx) => {
+//     const card = document.createElement("div");
+//     card.className = "food-section";
+//     card.innerHTML = `
+//       <h3>${idx + 1}. ${item.foodName} (${item.foodType})</h3>
+//       <ul>
+//         ${item.ingredients.map(ing => `
+//           <li>${ing.name}: ${ing.quantity} ${ing.unit}</li>
+//         `).join("")}
+//       </ul>
+//     `;
+//     previewDiv.appendChild(card);
+//   });
+
+//   const confirmBtn = document.createElement("button");
+//   confirmBtn.textContent = "Confirm & Submit";
+//   confirmBtn.onclick = () => {
+//     // You can add a real submission API here
+//     console.log("Submitted:", data);
+//     window.location.href = "submission_success.html";
+//   };
+
+//   previewDiv.appendChild(confirmBtn);
+//   container.appendChild(previewDiv);
+
+//   previewDiv.scrollIntoView({ behavior: "smooth" });
+// }
+
+
 function showPreview(data) {
   const container = document.querySelector(".container");
   const previewDiv = document.createElement("div");
@@ -354,14 +393,50 @@ function showPreview(data) {
 
   const confirmBtn = document.createElement("button");
   confirmBtn.textContent = "Confirm & Submit";
-  confirmBtn.onclick = () => {
-    // You can add a real submission API here
-    console.log("Submitted:", data);
-    window.location.href = "submission_success.html";
+  confirmBtn.onclick = async () => {
+    const token = localStorage.getItem("jwtToken");
+
+    if (!token) {
+      alert("No token found. Please login again.");
+      return;
+    }
+
+    // Convert JS ingredient keys to match DTO field names
+    const formattedData = data.map(item => ({
+      foodName: item.foodName,
+      foodType: item.foodType,
+      price: 0, // you can let users enter this later
+      ingredientNames: item.ingredients.map(ing => ({
+        ingredientName: ing.name,
+        amount: parseFloat(ing.quantity),
+        unitType: ing.unit
+      }))
+    }));
+
+    try {
+      const response = await fetch("http://127.0.0.1:8080/api/vendors/syncmenu", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify(formattedData)
+      });
+
+      if (!response.ok) {
+        const error = await response.text();
+        throw new Error(error);
+      }
+
+      alert("Menu submitted successfully!");
+      window.location.href = "submission_success.html";
+    } catch (error) {
+      console.error("Submission failed:", error);
+      alert("Failed to submit menu: " + error.message);
+    }
   };
 
   previewDiv.appendChild(confirmBtn);
   container.appendChild(previewDiv);
-
   previewDiv.scrollIntoView({ behavior: "smooth" });
 }

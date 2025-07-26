@@ -189,12 +189,46 @@ public class VendorService {
         vendorDetailsRepository.save(vendorDetails);
     }
 
+//    public void syncMenu(String username, List<MenuItemDTO> newMenu) {
+//        Users user = userRepository.findByUsername(username)
+//                .orElseThrow(() -> new RuntimeException("User not found"));
+//
+//        List<MenuItem> existingMenu = menuItemRepository.findByUser(user);
+//
+//        Map<String, MenuItem> existingMap = existingMenu.stream()
+//                .collect(Collectors.toMap(MenuItem::getFoodName, item -> item));
+//
+//        Set<String> incomingFoodNames = new HashSet<>();
+//
+//        for (MenuItemDTO dto : newMenu) {
+//            incomingFoodNames.add(dto.getFoodName());
+//            if (existingMap.containsKey(dto.getFoodName())) {
+//                MenuItem item = existingMap.get(dto.getFoodName());
+//                item.setIngredientNames(dto.getIngredientNames());
+//                menuItemRepository.save(item);
+//            } else {
+//
+//                MenuItem item = new MenuItem();
+//                item.setUser(user);
+//                item.setFoodName(dto.getFoodName());
+//                item.setIngredientNames(dto.getIngredientNames());
+//                menuItemRepository.save(item);
+//            }
+//        }
+//
+//        for (MenuItem existingItem : existingMenu) {
+//            if (!incomingFoodNames.contains(existingItem.getFoodName())) {
+//                menuItemRepository.delete(existingItem);
+//            }
+//        }
+//    }
+
+
     public void syncMenu(String username, List<MenuItemDTO> newMenu) {
         Users user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         List<MenuItem> existingMenu = menuItemRepository.findByUser(user);
-
         Map<String, MenuItem> existingMap = existingMenu.stream()
                 .collect(Collectors.toMap(MenuItem::getFoodName, item -> item));
 
@@ -202,20 +236,21 @@ public class VendorService {
 
         for (MenuItemDTO dto : newMenu) {
             incomingFoodNames.add(dto.getFoodName());
-            if (existingMap.containsKey(dto.getFoodName())) {
-                MenuItem item = existingMap.get(dto.getFoodName());
-                item.setIngredientNames(dto.getIngredientNames());
-                menuItemRepository.save(item);
-            } else {
 
-                MenuItem item = new MenuItem();
-                item.setUser(user);
-                item.setFoodName(dto.getFoodName());
-                item.setIngredientNames(dto.getIngredientNames());
-                menuItemRepository.save(item);
-            }
+            List<Ingredient> ingredientList = dto.getIngredientNames().stream()
+                    .map(i -> new Ingredient(i.getIngredientName(), i.getAmount(), i.getUnitType()))
+                    .collect(Collectors.toList());
+
+            MenuItem item = existingMap.getOrDefault(dto.getFoodName(), new MenuItem());
+            item.setUser(user);
+            item.setFoodName(dto.getFoodName());
+            item.setPrice(dto.getPrice());
+            item.setIngredientNames(ingredientList);
+            item.setFoodType(dto.getFoodType());
+
+            menuItemRepository.save(item);
         }
-        
+
         for (MenuItem existingItem : existingMenu) {
             if (!incomingFoodNames.contains(existingItem.getFoodName())) {
                 menuItemRepository.delete(existingItem);
@@ -223,6 +258,16 @@ public class VendorService {
         }
     }
 
+//    public List<MenuItemDTO> getMenuForUser(String username) {
+//        Users user = userRepository.findByUsername(username)
+//                .orElseThrow(() -> new RuntimeException("User not found"));
+//
+//        List<MenuItem> menuItems = menuItemRepository.findByUser(user);
+//
+//        return menuItems.stream()
+//                .map(item -> new MenuItemDTO(item.getFoodName(), item.getIngredientNames()))
+//                .collect(Collectors.toList());
+//    }
 
     public List<MenuItemDTO> getMenuForUser(String username) {
         Users user = userRepository.findByUsername(username)
@@ -231,7 +276,18 @@ public class VendorService {
         List<MenuItem> menuItems = menuItemRepository.findByUser(user);
 
         return menuItems.stream()
-                .map(item -> new MenuItemDTO(item.getFoodName(), item.getIngredientNames()))
+                .map(item -> {
+                    List<IngredientListDTO> ingredientDTOs = item.getIngredientNames().stream()
+                            .map(ing -> new IngredientListDTO(ing.getName(), ing.getAmount(), ing.getUnitType()))
+                            .collect(Collectors.toList());
+
+                    MenuItemDTO dto = new MenuItemDTO();
+                    dto.setFoodName(item.getFoodName());
+                    dto.setIngredientNames(ingredientDTOs);
+                    dto.setPrice(item.getPrice()); // assuming MenuItem has a price field
+                    dto.setFoodType(item.getFoodType()); // You should populate this if foodType exists in your entity
+                    return dto;
+                })
                 .collect(Collectors.toList());
     }
 
