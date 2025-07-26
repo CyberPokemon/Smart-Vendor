@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StreetSource - Empowering Street Food Vendors</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <span class="logo-text">StreetSource</span>
+                </div>
+            </div>
+            <div class="nav-right">
+                <a href="search.html" class="nav-link">Find Suppliers</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#contact" class="nav-link">Contact</a>
+                <div id="authButtons" class="auth-buttons">
+                    <a href="login.html" class="btn btn-outline btn-sm">Login</a>
+                    <a href="register.html" class="btn btn-primary btn-sm">Sign Up</a>
+                </div>
+                <div id="userMenu" class="user-menu" style="display: none;">
+                    <div class="user-info">
+                        <span id="userName">User</span>
+                        <button id="logoutBtn" class="btn btn-outline btn-sm">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="gradient-text">StreetSource</span>
+                </h1>
+                <p class="hero-subtitle">
+                    AI-Powered Raw Material Prediction for Street Food Vendors
+                </p>
+                <p class="hero-description">
+                    Track your daily sales, get AI predictions for raw material needs, and connect with nearby suppliers for seamless ordering.
+                </p>
+
+                <div class="cta-buttons">
+                    <a href="vendor-dashboard.html" class="btn btn-primary">
+                        Start Tracking Sales
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <a href="supplier-dashboard.html" class="btn btn-secondary">
+                        Register as Supplier
+                    </a>
+                    <a href="search.html" class="btn btn-ghost">
+                        Find Suppliers
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">How It Works</h2>
+                <p class="section-description">
+                    Simple 3-step process to optimize your raw material management
+                </p>
+            </div>
+
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="step-number">01</div>
+                    <h3 class="step-title">Track Daily Sales</h3>
+                    <p class="step-description">Enter your daily food sales and raw material usage</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <div class="step-number">02</div>
+                    <h3 class="step-title">Get AI Predictions</h3>
+                    <p class="step-description">Our AI analyzes patterns and predicts your material needs</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="step-number">03</div>
+                    <h3 class="step-title">Order from Nearby Suppliers</h3>
+                    <p class="step-description">Find and order from verified suppliers in your area</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Why Choose StreetSource?</h2>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3 class="feature-title">AI-Powered Predictions</h3>
+                    <p class="feature-description">Smart algorithms predict your raw material needs based on sales patterns</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Location-Based Suppliers</h3>
+                    <p class="feature-description">Find verified suppliers near you with real-time availability</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h3 class="feature-title">Sales Analytics</h3>
+                    <p class="feature-description">Track your business performance with detailed analytics</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>

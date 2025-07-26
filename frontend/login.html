@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>StreetSource Login</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="switcher">
+      <button id="vendorBtn">Vendor Login</button>
+      <button id="supplierBtn">Supplier Login</button>
+    </div>
+
+    <div class="slider" id="slider">
+      <div class="form vendor-form">
+        <h2>Vendor Login</h2>
+        <input type="text" placeholder="Vendor ID" required>
+        <input type="password" placeholder="Password" required>
+        <button>Login</button>
+      </div>
+
+      <div class="form supplier-form">
+        <h2>Supplier Login</h2>
+        <input type="text" placeholder="Supplier ID" required>
+        <input type="password" placeholder="Password" required>
+        <button>Login</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const slider = document.getElementById("slider");
+    document.getElementById("vendorBtn").onclick = () => {
+      slider.style.transform = "translateX(0%)";
+    };
+    document.getElementById("supplierBtn").onclick = () => {
+      slider.style.transform = "translateX(-50%)";
+    };
+  </script>
+</body>
+</html>
