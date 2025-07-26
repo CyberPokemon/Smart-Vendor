@@ -5,6 +5,7 @@ import com.hackops.backend.dto.vendor.DailyUsageEntryDTO;
 import com.hackops.backend.dto.vendor.IngredientResponseDTO;
 import com.hackops.backend.dto.vendor.IngredientUsageResponseDTO;
 import com.hackops.backend.dto.vendor.RequestIngridientsDTO;
+import com.hackops.backend.service.GeminiService;
 import com.hackops.backend.service.JWTService;
 import com.hackops.backend.service.VendorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,9 @@ public class VendorController {
 
     @Autowired
     private VendorService vendorService;
+
+    @Autowired
+    private GeminiService geminiService;
     
     @PostMapping("/addingredientList")
     public ResponseEntity<ApiResponseMessageDTO> registerIngridients(@RequestBody List<RequestIngridientsDTO> requestIngridientsDTO, @RequestHeader("Authorization") String token)
@@ -103,5 +107,17 @@ public class VendorController {
         LocalDate startDate = LocalDate.parse(start);
         LocalDate endDate = LocalDate.parse(end);
         return ResponseEntity.ok(vendorService.getUsageByDateRange(username, startDate, endDate));
+    }
+
+    @GetMapping("/predictionai")
+    public ResponseEntity<?> generatePrediction(@RequestHeader("Authorization") String token)
+    {
+        String username = jwtService.extractUsername(token.substring(7));
+        try{
+            String s = geminiService.predictIngriendlist(username);
+            return ResponseEntity.ok(new ApiResponseMessageDTO(s));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(new ApiResponseMessageDTO(e.getMessage()));
+        }
     }
 }
