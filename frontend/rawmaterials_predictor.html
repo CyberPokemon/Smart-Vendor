@@ -76,6 +76,52 @@
         </div>
       </div>
     </div>
+    <!-- Filter Section -->
+<div class="card">
+  <div class="card-header">
+    <h3 class="card-title">
+      <i class="fas fa-filter"></i>
+      Filter Usage History
+    </h3>
+  </div>
+  <div class="card-content">
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="filterType">Filter By</label>
+        <select id="filterType" class="form-input">
+          <option value="">-- Select --</option>
+          <option value="date">Date</option>
+          <option value="month">Month</option>
+          <option value="range">Date Range</option>
+        </select>
+      </div>
+
+      <div class="form-group filter-input" id="filter-date" style="display: none;">
+        <label for="filterDate">Select Date</label>
+        <input type="date" id="filterDate" class="form-input" />
+      </div>
+
+      <div class="form-group filter-input" id="filter-month" style="display: none;">
+        <label for="filterMonth">Select Month</label>
+        <input type="month" id="filterMonth" class="form-input" />
+      </div>
+
+      <div class="form-group filter-input" id="filter-range" style="display: none;">
+        <label for="startDate">Start Date</label>
+        <input type="date" id="startDate" class="form-input" />
+        <label for="endDate">End Date</label>
+        <input type="date" id="endDate" class="form-input" />
+      </div>
+    </div>
+    <div class="form-actions" style="margin-top: 1rem;">
+      <button id="filterBtn" class="btn btn-secondary">
+        <i class="fas fa-search"></i>
+        Apply Filter
+      </button>
+    </div>
+  </div>
+</div>
+
 
     <!-- History Table -->
     <div class="card">

@@ -163,3 +163,70 @@ predictBtn.addEventListener("click", () => {
   html += `</ul>`;
   predictionOutput.innerHTML = html;
 });
+
+const filterType = document.getElementById("filterType");
+const filterDate = document.getElementById("filterDate");
+const filterMonth = document.getElementById("filterMonth");
+const startDate = document.getElementById("startDate");
+const endDate = document.getElementById("endDate");
+const filterBtn = document.getElementById("filterBtn");
+
+filterType.addEventListener("change", () => {
+  document.querySelectorAll(".filter-input").forEach(el => el.style.display = "none");
+
+  const value = filterType.value;
+  if (value === "date") document.getElementById("filter-date").style.display = "block";
+  else if (value === "month") document.getElementById("filter-month").style.display = "block";
+  else if (value === "range") document.getElementById("filter-range").style.display = "block";
+});
+
+filterBtn.addEventListener("click", async () => {
+  const token = localStorage.getItem("jwtToken");
+  if (!token) {
+    alert("User not authenticated. Please login again.");
+    return;
+  }
+
+  const type = filterType.value;
+  let url = "";
+
+  if (type === "date") {
+    const date = filterDate.value;
+    if (!date) return alert("Select a date");
+    url = `http://127.0.0.1:8080/api/vendors/usage/bydate?date=${date}`;
+  } else if (type === "month") {
+    const [year, month] = filterMonth.value.split("-");
+    if (!month || !year) return alert("Select a month");
+    url = `http://127.0.0.1:8080/api/vendors/usage/bymonth?month=${parseInt(month)}&year=${year}`;
+  } else if (type === "range") {
+    const start = startDate.value;
+    const end = endDate.value;
+    if (!start || !end) return alert("Select a valid range");
+    url = `http://127.0.0.1:8080/api/vendors/usage/byrange?start=${start}&end=${end}`;
+  } else {
+    return alert("Please select a filter type.");
+  }
+
+  try {
+    const response = await fetch(url, {
+      headers: { "Authorization": `Bearer ${token}` }
+    });
+
+    if (!response.ok) throw new Error("Failed to fetch usage history");
+
+    const data = await response.json();
+
+    rawMaterialData = data.map(entry => ({
+      date: entry.date,
+      name: entry.ingredientName,
+      bought: entry.quantityBought,
+      used: entry.quantityUsed,
+      price: 0  // backend doesn't return price
+    }));
+
+    updateHistoryTable();
+  } catch (error) {
+    console.error("Error loading history:", error);
+    alert("Failed to load data: " + error.message);
+  }
+});
