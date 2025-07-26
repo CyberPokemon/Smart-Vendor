@@ -1,5 +1,6 @@
 package com.hackops.backend.service;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hackops.backend.dto.vendor.IngredientUsageResponseDTO;
 import com.hackops.backend.model.Users;
@@ -40,7 +41,7 @@ public class GeminiService {
         this.webClient = webClient.build();
     }
 
-    public String predictIngriendlist(String username)
+    public Map<String, Map<String, List<Double>>> predictIngriendlist(String username)
     {
         Users user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -91,8 +92,10 @@ public class GeminiService {
             String unescapedJson = StringEscapeUtils.unescapeJson(cleaned);
 
             System.out.println("Cleaned JSON: " + unescapedJson);
+            return objectMapper.readValue(unescapedJson,
+                    new TypeReference<Map<String, Map<String, List<Double>>>>() {});
 
-            return unescapedJson;
+//            return unescapedJson;
         } catch (Exception e) {
             throw new RuntimeException("Failed to call Gemini API: " + e.getMessage(), e);
         }

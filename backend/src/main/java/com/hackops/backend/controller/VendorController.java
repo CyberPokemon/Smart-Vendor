@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/vendors")
@@ -114,8 +115,8 @@ public class VendorController {
     {
         String username = jwtService.extractUsername(token.substring(7));
         try{
-            String s = geminiService.predictIngriendlist(username);
-            return ResponseEntity.ok(new ApiResponseMessageDTO(s));
+            Map<String, Map<String, List<Double>>> prediction = geminiService.predictIngriendlist(username);
+            return ResponseEntity.ok(prediction);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new ApiResponseMessageDTO(e.getMessage()));
         }
