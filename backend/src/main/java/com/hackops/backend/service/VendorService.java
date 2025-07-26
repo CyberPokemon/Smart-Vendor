@@ -123,6 +123,7 @@ public class VendorService {
             log.setIngredientName(dto.getIngredientName());
             log.setQuantityBought(dto.getQuantityBought());
             log.setQuantityUsed(dto.getQuantityUsed());
+            log.setPrice(dto.getPrice());
             log.setDate(date);
 
             ingredientUsageLogRepository.save(log);
