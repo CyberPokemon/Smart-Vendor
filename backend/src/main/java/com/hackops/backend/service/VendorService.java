@@ -1,14 +1,13 @@
 package com.hackops.backend.service;
 
-import com.hackops.backend.dto.vendor.IngredientResponseDTO;
-import com.hackops.backend.dto.vendor.IngredientUsageRequestDTO;
-import com.hackops.backend.dto.vendor.IngredientUsageResponseDTO;
-import com.hackops.backend.dto.vendor.RequestIngridientsDTO;
+import com.hackops.backend.dto.vendor.*;
 import com.hackops.backend.model.IngredientUsageLog;
 import com.hackops.backend.model.Users;
+import com.hackops.backend.model.VendorDetails;
 import com.hackops.backend.model.VendorIngridientList;
 import com.hackops.backend.repository.IngredientUsageLogRepository;
 import com.hackops.backend.repository.UserRepository;
+import com.hackops.backend.repository.VendorDetailsRepository;
 import com.hackops.backend.repository.VendorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +29,9 @@ public class VendorService {
 
     @Autowired
     private IngredientUsageLogRepository ingredientUsageLogRepository;
+
+    @Autowired
+    private VendorDetailsRepository vendorDetailsRepository;
 
 
     public void registerIngridients(List<RequestIngridientsDTO> requestIngridientsDTO, String username) {
@@ -144,6 +146,33 @@ public class VendorService {
                 .stream()
                 .map(log -> new IngredientUsageResponseDTO(log.getIngredientName(), log.getQuantityBought(), log.getQuantityUsed(), log.getDate().toString()))
                 .collect(Collectors.toList());
+    }
+//
+//    public void setDetails(VendorDetailsDTO vendorDetailsDTO, String username) {
+//        Users user =  userRepository.findByUsername(username)
+//                .orElseThrow(() -> new RuntimeException("User not found"));
+//
+//        VendorDetails v = new VendorDetails(user,vendorDetailsDTO.getTypesOfFood(), vendorDetailsDTO.getVegNonVeg());
+//        vendorDetailsRepository.save(v);
+//
+//    }
+
+    public void setDetails(VendorDetailsDTO vendorDetailsDTO, String username) {
+        Users user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        Optional<VendorDetails> optionalVendorDetails = vendorDetailsRepository.findByUser(user);
+
+        VendorDetails vendorDetails;
+        if (optionalVendorDetails.isPresent()) {
+            vendorDetails = optionalVendorDetails.get();
+            vendorDetails.setTypesOfFood(vendorDetailsDTO.getTypesOfFood());
+            vendorDetails.setVegNonVeg(vendorDetailsDTO.getVegNonVeg());
+        } else {
+            vendorDetails = new VendorDetails(user, vendorDetailsDTO.getTypesOfFood(), vendorDetailsDTO.getVegNonVeg());
+        }
+
+        vendorDetailsRepository.save(vendorDetails);
     }
 
 }
