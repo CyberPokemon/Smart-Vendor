@@ -2,6 +2,7 @@ package com.hackops.backend.service;
 
 import com.hackops.backend.dto.vendor.IngredientResponseDTO;
 import com.hackops.backend.dto.vendor.IngredientUsageRequestDTO;
+import com.hackops.backend.dto.vendor.IngredientUsageResponseDTO;
 import com.hackops.backend.dto.vendor.RequestIngridientsDTO;
 import com.hackops.backend.model.IngredientUsageLog;
 import com.hackops.backend.model.Users;
@@ -112,6 +113,37 @@ public class VendorService {
 
             ingredientUsageLogRepository.save(log);
         }
+    }
+
+
+    public List<IngredientUsageResponseDTO> getUsageByDate(String username, LocalDate date) {
+        Users user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        return ingredientUsageLogRepository.findByUserAndDate(user, date)
+                .stream()
+                .map(log -> new IngredientUsageResponseDTO(log.getIngredientName(), log.getQuantityBought(), log.getQuantityUsed(), log.getDate().toString()))
+                .collect(Collectors.toList());
+    }
+
+    public List<IngredientUsageResponseDTO> getUsageByMonth(String username, int month, int year) {
+        Users user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        return ingredientUsageLogRepository.findByUserAndMonthYear(user, month, year)
+                .stream()
+                .map(log -> new IngredientUsageResponseDTO(log.getIngredientName(), log.getQuantityBought(), log.getQuantityUsed(), log.getDate().toString()))
+                .collect(Collectors.toList());
+    }
+
+    public List<IngredientUsageResponseDTO> getUsageByDateRange(String username, LocalDate start, LocalDate end) {
+        Users user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        return ingredientUsageLogRepository.findByUserAndDateBetween(user, start, end)
+                .stream()
+                .map(log -> new IngredientUsageResponseDTO(log.getIngredientName(), log.getQuantityBought(), log.getQuantityUsed(), log.getDate().toString()))
+                .collect(Collectors.toList());
     }
 
 }
