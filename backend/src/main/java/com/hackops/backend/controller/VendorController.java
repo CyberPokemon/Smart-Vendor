@@ -1,6 +1,7 @@
 package com.hackops.backend.controller;
 
 import com.hackops.backend.dto.ApiResponseMessageDTO;
+import com.hackops.backend.dto.vendor.IngredientResponseDTO;
 import com.hackops.backend.dto.vendor.RequestIngridientsDTO;
 import com.hackops.backend.service.JWTService;
 import com.hackops.backend.service.VendorService;
@@ -47,7 +48,20 @@ public class VendorController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new ApiResponseMessageDTO(e.getMessage()));
         }
+    }
+
+    @GetMapping("/ingredientslist")
+    public ResponseEntity<?> getIngredients(@RequestHeader("Authorization") String token) {
+        String username = jwtService.extractUsername(token.substring(7));
+
+        try{
+            List<IngredientResponseDTO> ingredients = vendorService.getIngredientsByUsername(username);
+            return ResponseEntity.ok(ingredients);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(new ApiResponseMessageDTO(e.getMessage()));
+        }
 
     }
+
 
 }

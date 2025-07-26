@@ -1,5 +1,6 @@
 package com.hackops.backend.service;
 
+import com.hackops.backend.dto.vendor.IngredientResponseDTO;
 import com.hackops.backend.dto.vendor.RequestIngridientsDTO;
 import com.hackops.backend.model.Users;
 import com.hackops.backend.model.VendorIngridientList;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class VendorService {
@@ -51,7 +53,6 @@ public class VendorService {
             updatedNames.add(name);
 
             if (existingMap.containsKey(name)) {
-                // Update existing ingredient
                 VendorIngridientList existing = existingMap.get(name);
                 existing.setAverageQuantity(dto.getQuantity());
                 vendorRepository.save(existing);
@@ -67,5 +68,17 @@ public class VendorService {
             }
         }
     }
+
+    public List<IngredientResponseDTO> getIngredientsByUsername(String username) {
+        Users user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        List<VendorIngridientList> ingredientList = vendorRepository.findByUser(user);
+
+        return ingredientList.stream()
+                .map(i -> new IngredientResponseDTO(i.getIngridientName(), i.getAverageQuantity()))
+                .collect(Collectors.toList());
+    }
+
 
 }
