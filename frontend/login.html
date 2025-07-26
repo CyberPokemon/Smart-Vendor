@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="sliding-auth.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
+
 <body>
     <div class="sliding-container" id="container">
         <!-- Sign Up Container (Registration Options) -->
@@ -20,20 +22,20 @@
                 </div>
                 <h1>Create Account</h1>
                 <p>Choose how you'd like to register</p>
-                
+
                 <div class="register-options">
                     <button type="button" class="social-btn google" onclick="socialLogin('google')">
                         <i class="fab fa-google"></i>
                         Continue with Google
                     </button>
-                    
+
                     <button type="button" class="social-btn facebook" onclick="socialLogin('facebook')">
                         <i class="fab fa-facebook-f"></i>
                         Continue with Facebook
                     </button>
-                    
+
                     <div class="divider">OR</div>
-                    
+
                     <button type="button" onclick="goToRegister()">
                         <i class="fas fa-user-plus"></i>
                         Continue with Email
@@ -53,18 +55,18 @@
                 </div>
                 <h1>Welcome Back</h1>
                 <p>Sign in to your account to continue</p>
-                
+
                 <input type="email" id="email" placeholder="Email Address" required />
                 <input type="password" id="password" placeholder="Password" required />
-                
-                <div class="form-options">
+
+                <!-- <div class="form-options">
                     <label class="checkbox-label">
                         <input type="checkbox" id="rememberMe">
                         Remember me
                     </label>
                     <a href="forgot-password.html" class="forgot-link">Forgot password?</a>
-                </div>
-                
+                </div> -->
+
                 <button type="button" onclick="handleLogin()">
                     <i class="fas fa-sign-in-alt"></i>
                     Sign In
@@ -103,43 +105,94 @@
             container.classList.remove("right-panel-active");
         });
 
-        // Handle login with any credentials
-        function handleLogin() {
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            
+        // // Handle login with any credentials
+        // function handleLogin() {
+        //     const email = document.getElementById('email').value;
+        //     const password = document.getElementById('password').value;
+
+        //     if (!email || !password) {
+        //         alert('Please enter email and password');
+        //         return;
+        //     }
+
+        //     // Accept any credentials - set user type based on email
+        //     let userType = 'vendor';
+        //     let setupComplete = false;
+
+        //     if (email.includes('supplier')) {
+        //         userType = 'supplier';
+        //     } else if (email.includes('vendor2') || email.includes('demo2') || email.includes('returning')) {
+        //         setupComplete = true;
+        //     }
+
+        //     // Store user data
+        //     localStorage.setItem('streetsource_token', 'demo_token_' + Date.now());
+        //     localStorage.setItem('streetsource_user', JSON.stringify({
+        //         email: email,
+        //         userType: userType,
+        //         profileSetupComplete: setupComplete
+        //     }));
+
+        //     // Redirect based on user type and setup status
+        //     if (userType === 'supplier') {
+        //         window.location.href = 'supplier-dashboard.html';
+        //     } else if (setupComplete) {
+        //         window.location.href = 'prediction-dashboard.html';
+        //     } else {
+        //         window.location.href = 'basic-details.html';
+        //     }
+        // }
+
+        async function handleLogin() {
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+
+            const email = emailInput.value.trim();
+            const password = passwordInput.value;
+
             if (!email || !password) {
-                alert('Please enter email and password');
+                alert('Please fill in both email and password.');
                 return;
             }
-            
-            // Accept any credentials - set user type based on email
-            let userType = 'vendor';
-            let setupComplete = false;
-            
-            if (email.includes('supplier')) {
-                userType = 'supplier';
-            } else if (email.includes('vendor2') || email.includes('demo2') || email.includes('returning')) {
-                setupComplete = true;
-            }
-            
-            // Store user data
-            localStorage.setItem('streetsource_token', 'demo_token_' + Date.now());
-            localStorage.setItem('streetsource_user', JSON.stringify({
-                email: email,
-                userType: userType,
-                profileSetupComplete: setupComplete
-            }));
-            
-            // Redirect based on user type and setup status
-            if (userType === 'supplier') {
-                window.location.href = 'supplier-dashboard.html';
-            } else if (setupComplete) {
-                window.location.href = 'prediction-dashboard.html';
-            } else {
-                window.location.href = 'basic-details.html';
+
+            // Convert email to username for backend
+            const username = email.split('@')[0]; // or fetch username another way if required
+
+            const payload = {
+                username: username,
+                password: password
+            };
+
+            try {
+                const response = await fetch('http://127.0.0.1:8080/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+
+                if (response.ok && result.jwtToken) {
+                    alert(result.message + "\nWelcome, " + result.username);
+
+                    // Optionally store JWT in localStorage or sessionStorage
+                    sessionStorage.setItem('jwtToken', result.jwtToken);
+                    sessionStorage.setItem('username', result.username);
+                    sessionStorage.setItem('role', result.role);
+
+                    // Redirect to dashboard or homepage
+                    window.location.href = 'dashboard.html'; // Change as per your app
+                } else {
+                    alert(result.message || 'Login failed. Please try again.');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                alert('Something went wrong. Please try again later.');
             }
         }
+
 
         // Social login placeholder
         function socialLogin(provider) {
@@ -152,7 +205,7 @@
         }
 
         // Enter key support
-        document.addEventListener('keypress', function(e) {
+        document.addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
                 if (!container.classList.contains('right-panel-active')) {
                     handleLogin();
@@ -161,4 +214,5 @@
         });
     </script>
 </body>
+
 </html>
