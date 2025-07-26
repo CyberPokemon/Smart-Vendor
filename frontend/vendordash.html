@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vendor Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="dashboard-style.css" />
+</head>
+<body class="bg-gray-100 font-sans min-h-screen">
+  <header class="navbar">
+    <h1 class="logo">🌮 Vendor Dashboard</h1>
+    <button class="logout-btn">Logout</button>
+  </header>
+
+  <main class="container">
+    <section class="suggested-section">
+      <h2 class="section-title">🥦 Suggested Ingredients to Restock</h2>
+      <div id="suggestedItems" class="suggested-grid"></div>
+    </section>
+
+    <section class="form-section">
+      <h3 class="section-title">📝 Your Ingredient List</h3>
+
+      <form id="ingredientForm">
+        <div id="ingredientList" class="space-y-4 mb-4"></div>
+
+        <div class="form-buttons">
+          <button type="button" onclick="toggleAddIngredient()" class="btn green">➕ Add Ingredient</button>
+          <button type="button" onclick="predictQuantities()" class="btn blue">📈 Predict Quantities</button>
+          <button type="submit" class="btn dark">✅ Submit Order</button>
+        </div>
+      </form>
+
+      <div id="output" class="output hidden">
+        <h4 class="summary-title">✅ Summary:</h4>
+        <ul id="outputList" class="summary-list"></ul>
+        <p class="total-cost">💰 Total Cost: ₹<span id="totalCost">0</span></p>
+      </div>
+    </section>
+  </main>
+
+  <script src="dashboard-script.js"></script>
+</body>
+</html>
