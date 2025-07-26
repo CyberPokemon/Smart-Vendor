@@ -18,22 +18,58 @@ public class VendorIngridientList {
     private String ingredientName;
 
     private double averageQuantity;
+    private double averagePrice;
+    private String unit;
 
 
-    public VendorIngridientList(Long id, Users user, String ingredientName, double averageQuantity) {
+//    public VendorIngridientList(Long id, Users user, String ingredientName, double averageQuantity) {
+//        this.id = id;
+//        this.user = user;
+//        ingredientName = ingredientName;
+//        this.averageQuantity = averageQuantity;
+//    }
+
+//    public VendorIngridientList(Users user, String ingredientName, double averageQuantity) {
+//        this.user = user;
+//        this.ingredientName = ingredientName;
+//        this.averageQuantity = averageQuantity;
+//    }
+
+
+    public VendorIngridientList(Long id, Users user, String ingredientName, double averageQuantity, double averagePrice, String unit) {
         this.id = id;
-        this.user = user;
-        ingredientName = ingredientName;
-        this.averageQuantity = averageQuantity;
-    }
-
-    public VendorIngridientList(Users user, String ingredientName, double averageQuantity) {
         this.user = user;
         this.ingredientName = ingredientName;
         this.averageQuantity = averageQuantity;
+        this.averagePrice = averagePrice;
+        this.unit = unit;
+    }
+
+    public VendorIngridientList(Users user, String ingredientName, double averageQuantity, double averagePrice, String unit) {
+        this.user = user;
+        this.ingredientName = ingredientName;
+        this.averageQuantity = averageQuantity;
+        this.averagePrice = averagePrice;
+        this.unit = unit;
     }
 
     public VendorIngridientList() {
+    }
+
+    public double getAveragePrice() {
+        return averagePrice;
+    }
+
+    public void setAveragePrice(double averagePrice) {
+        this.averagePrice = averagePrice;
+    }
+
+    public String getIngredientName() {
+        return ingredientName;
+    }
+
+    public void setIngredientName(String ingredientName) {
+        this.ingredientName = ingredientName;
     }
 
     public Long getId() {
@@ -66,5 +102,13 @@ public class VendorIngridientList {
 
     public void setAverageQuantity(double averageQuantity) {
         this.averageQuantity = averageQuantity;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
     }
 }

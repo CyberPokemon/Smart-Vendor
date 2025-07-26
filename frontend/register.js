@@ -227,9 +227,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
           if (response.ok) {
               showToast(result.message, true);
+              localStorage.setItem("jwtToken",result.jwtToken);
               registerForm.reset();
-              // You may redirect after success if needed
-              // window.location.href = 'login.html';
+              window.location.href = 'ingredient_entry.html';
           } else {
               showToast(result.message || 'Registration failed', false);
           }

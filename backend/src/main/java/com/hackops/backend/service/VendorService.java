@@ -32,18 +32,18 @@ public class VendorService {
 
 
 
-    public void registerIngridients(List<RequestIngridientsDTO> requestIngridientsDTO, String username) {
-        Users user = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found"));
-
-        for (RequestIngridientsDTO l : requestIngridientsDTO)
-        {
-            VendorIngridientList vendorIngridientList = new VendorIngridientList(user, l.getIngridiends(), l.getQuantity());
-
-            vendorRepository.save(vendorIngridientList);
-
-        }
-
-    }
+//    public void registerIngridients(List<RequestIngridientsDTO> requestIngridientsDTO, String username) {
+//        Users user = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found"));
+//
+//        for (RequestIngridientsDTO l : requestIngridientsDTO)
+//        {
+//            VendorIngridientList vendorIngridientList = new VendorIngridientList(user, l.getIngridiends(), l.getQuantity());
+//
+//            vendorRepository.save(vendorIngridientList);
+//
+//        }
+//
+//    }
 
     public void updateIngredients(List<RequestIngridientsDTO> updatedList, String username) {
         Users user = userRepository.findByUsername(username)
@@ -64,9 +64,11 @@ public class VendorService {
             if (existingMap.containsKey(name)) {
                 VendorIngridientList existing = existingMap.get(name);
                 existing.setAverageQuantity(dto.getQuantity());
+                existing.setAveragePrice(dto.getAvgprice());
+                existing.setUnit(dto.getUnit());
                 vendorRepository.save(existing);
             } else {
-                VendorIngridientList newIngredient = new VendorIngridientList(user, dto.getIngridiends(), dto.getQuantity());
+                VendorIngridientList newIngredient = new VendorIngridientList(user, dto.getIngridiends(), dto.getQuantity(), dto.getAvgprice(),dto.getUnit());
                 vendorRepository.save(newIngredient);
             }
         }
@@ -166,9 +168,10 @@ public class VendorService {
         if (optionalVendorDetails.isPresent()) {
             vendorDetails = optionalVendorDetails.get();
             vendorDetails.setTypesOfFood(vendorDetailsDTO.getTypesOfFood());
-            vendorDetails.setVegNonVeg(vendorDetailsDTO.getVegNonVeg());
+//            vendorDetails.setVegNonVeg(vendorDetailsDTO.getVegNonVeg());
         } else {
-            vendorDetails = new VendorDetails(user, vendorDetailsDTO.getTypesOfFood(), vendorDetailsDTO.getVegNonVeg());
+//            vendorDetails = new VendorDetails(user, vendorDetailsDTO.getTypesOfFood(), vendorDetailsDTO.getVegNonVeg());
+            vendorDetails = new VendorDetails(user, vendorDetailsDTO.getTypesOfFood());
         }
 
         vendorDetailsRepository.save(vendorDetails);
