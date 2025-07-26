@@ -137,8 +137,60 @@ document.addEventListener("DOMContentLoaded", () => {
     // Add raw material button
     document.getElementById("addRawMaterial").addEventListener("click", addRawMaterialRow)
 
-    // Sales form submission
-    document.getElementById("salesEntryForm").addEventListener("submit", handleSalesSubmission)
+    // Sales form submission - Updated to use your API
+  salesForm.addEventListener("submit", async (e) => {
+    e.preventDefault()
+
+    const formData = new FormData(salesForm)
+    const rawMaterialRows = document.querySelectorAll(".raw-material-row")
+
+    // Prepare ingredients data for your API
+    const ingredientEntries = []
+    const currentDate = DateUtils.getCurrentDate()
+
+    rawMaterialRows.forEach((row) => {
+      const ingredientName = row.querySelector('[name="ingredientName"]').value
+      const quantityBought = parseFloat(row.querySelector('[name="quantityBought"]').value) || 0
+      const quantityUsed = parseFloat(row.querySelector('[name="quantityUsed"]').value) || 0
+
+      if (ingredientName && quantityBought > 0 && quantityUsed > 0) {
+        ingredientEntries.push({
+          ingredientName,
+          quantityBought,
+          quantityUsed,
+          date: currentDate
+        })
+      }
+    })
+
+    if (ingredientEntries.length === 0) {
+      showMessage("Please add at least one ingredient with quantities", "error")
+      return
+    }
+
+    const submitButton = salesForm.querySelector('button[type="submit"]')
+    setButtonLoading(submitButton, true)
+
+    try {
+      // Call your real API
+      const response = await IngredientAPI.setDailyUsage(ingredientEntries)
+      
+      showMessage(response.message || "Ingredient usage recorded successfully!", "success")
+      
+      // Refresh the usage data display
+      await loadTodaysUsage()
+      await loadUsageStats()
+      
+      // Reset form
+      salesForm.reset()
+      
+    } catch (error) {
+      console.error("Sales submission error:", error)
+      showMessage(error.message || "Failed to save ingredient usage data", "error")
+    } finally {
+      setButtonLoading(submitButton, false)
+    }
+  })
 
     // Get prediction button
     document.getElementById("getPrediction").addEventListener("click", generatePrediction)
@@ -206,30 +258,28 @@ document.addEventListener("DOMContentLoaded", () => {
     newRow.className = "raw-material-row"
     newRow.innerHTML = `
       <div class="form-group">
-        <label>Raw Material</label>
-        <select class="raw-material-select" name="rawMaterial">
-          <option value="">Select Material</option>
-          <option value="onions">Onions</option>
-          <option value="tomatoes">Tomatoes</option>
-          <option value="potatoes">Potatoes</option>
-          <option value="oil">Oil</option>
-          <option value="flour">Flour</option>
-          <option value="spices">Spices</option>
-          <option value="other">Other</option>
+        <label>Ingredient Name</label>
+        <select class="raw-material-select" name="ingredientName">
+          <option value="">Select Ingredient</option>
+          <option value="Tomatoes">Tomatoes</option>
+          <option value="Onions">Onions</option>
+          <option value="Potatoes">Potatoes</option>
+          <option value="Oil">Oil</option>
+          <option value="Flour">Flour</option>
+          <option value="Rice">Rice</option>
+          <option value="Spices">Spices</option>
+          <option value="Green Chilies">Green Chilies</option>
+          <option value="Garlic">Garlic</option>
+          <option value="Ginger">Ginger</option>
         </select>
+      </div>
+      <div class="form-group">
+        <label>Quantity Bought</label>
+        <input type="number" name="quantityBought" placeholder="e.g., 10" min="0" step="0.1" required>
       </div>
       <div class="form-group">
         <label>Quantity Used</label>
-        <input type="number" name="quantityUsed" placeholder="e.g., 5" min="0" step="0.1">
-      </div>
-      <div class="form-group">
-        <label>Unit</label>
-        <select name="unit">
-          <option value="kg">Kg</option>
-          <option value="liters">Liters</option>
-          <option value="pieces">Pieces</option>
-          <option value="packets">Packets</option>
-        </select>
+        <input type="number" name="quantityUsed" placeholder="e.g., 8" min="0" step="0.1" required>
       </div>
       <button type="button" class="btn-remove" onclick="removeRawMaterial(this)">
         <i class="fas fa-trash"></i>
@@ -399,7 +449,156 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("predictionsCard").scrollIntoView({ behavior: "smooth" })
   }
 
-  // API_ENDPOINT: GET /sales/stats - Get dashboard statistics
+  // Load today's usage data
+  async function loadTodaysUsage() {
+    try {
+      const today = DateUtils.getCurrentDate()
+      const usageData = await IngredientAPI.getUsageByDate(today)
+      displayUsageData(usageData, "Today's Usage")
+    } catch (error) {
+      console.error("Error loading today's usage:", error)
+    }
+  }
+
+  // Load usage statistics
+  async function loadUsageStats() {
+    try {
+      const { month, year } = DateUtils.getCurrentMonth()
+      const monthlyData = await IngredientAPI.getUsageByMonth(month, year)
+      
+      // Calculate statistics from monthly data
+      const stats = calculateUsageStats(monthlyData)
+      updateDashboardStats(stats)
+    } catch (error) {
+      console.error("Error loading usage stats:", error)
+    }
+  }
+
+  // Calculate usage statistics
+  function calculateUsageStats(data) {
+    const totalBought = data.reduce((sum, item) => sum + item.quantityBought, 0)
+    const totalUsed = data.reduce((sum, item) => sum + item.quantityUsed, 0)
+    const wastePercentage = totalBought > 0 ? ((totalBought - totalUsed) / totalBought * 100).toFixed(1) : 0
+    
+    return {
+      totalBought: totalBought.toFixed(1),
+      totalUsed: totalUsed.toFixed(1),
+      wastePercentage
+    }
+  }
+
+  // Display usage data in a table or cards
+  function displayUsageData(data, title) {
+    const usageContainer = document.getElementById('usageDataContainer') || createUsageContainer()
+    
+    let html = `<h3>${title}</h3>`
+    
+    if (data.length === 0) {
+      html += '<p>No usage data found for this period.</p>'
+    } else {
+      html += `
+        <div class="usage-table-container">
+          <table class="usage-table">
+            <thead>
+              <tr>
+                <th>Ingredient</th>
+                <th>Bought (kg)</th>
+                <th>Used (kg)</th>
+                <th>Waste</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+      `
+      
+      data.forEach(item => {
+        const waste = (item.quantityBought - item.quantityUsed).toFixed(1)
+        const wastePercentage = ((waste / item.quantityBought) * 100).toFixed(1)
+        
+        html += `
+          <tr>
+            <td>${item.ingredientName}</td>
+            <td>${item.quantityBought}</td>
+            <td>${item.quantityUsed}</td>
+            <td>${waste} kg (${wastePercentage}%)</td>
+            <td>${item.date}</td>
+          </tr>
+        `
+      })
+      
+      html += `
+            </tbody>
+          </table>
+        </div>
+      `
+    }
+    
+    usageContainer.innerHTML = html
+  }
+
+  // Weekly usage data
+  async function loadWeeklyUsage() {
+    try {
+      const today = new Date()
+      const weekAgo = new Date(today)
+      weekAgo.setDate(today.getDate() - 7)
+      
+      const startDate = DateUtils.formatDate(weekAgo)
+      const endDate = DateUtils.formatDate(today)
+      
+      const usageData = await IngredientAPI.getUsageByRange(startDate, endDate)
+      displayUsageData(usageData, "This Week's Usage")
+    } catch (error) {
+      console.error("Error loading weekly usage:", error)
+      showMessage("Failed to load weekly usage data", "error")
+    }
+  }
+
+  // Monthly usage data
+  async function loadMonthlyUsage() {
+    try {
+      const { month, year } = DateUtils.getCurrentMonth()
+      const usageData = await IngredientAPI.getUsageByMonth(month, year)
+      displayUsageData(usageData, "This Month's Usage")
+    } catch (error) {
+      console.error("Error loading monthly usage:", error)
+      showMessage("Failed to load monthly usage data", "error")
+    }
+  }
+
+  // Custom date range
+  async function loadCustomRange() {
+    try {
+      const startDate = document.getElementById('startDate').value
+      const endDate = document.getElementById('endDate').value
+      
+      if (!startDate || !endDate) {
+        showMessage("Please select both start and end dates", "error")
+        return
+      }
+      
+      if (new Date(startDate) > new Date(endDate)) {
+        showMessage("Start date cannot be after end date", "error")
+        return
+      }
+      
+      const usageData = await IngredientAPI.getUsageByRange(startDate, endDate)
+      displayUsageData(usageData, `Usage from ${startDate} to ${endDate}`)
+    } catch (error) {
+      console.error("Error loading custom range usage:", error)
+      showMessage("Failed to load usage data for selected range", "error")
+    }
+  }
+
+  // Make functions globally available
+  window.loadTodaysUsage = loadTodaysUsage
+  window.loadWeeklyUsage = loadWeeklyUsage
+  window.loadMonthlyUsage = loadMonthlyUsage
+  window.loadCustomRange = loadCustomRange
+
+  // Load initial data
+  loadTodaysUsage()
+  loadUsageStats()
   async function loadDashboardStats() {
     try {
       // API_ENDPOINT: GET /sales/stats - Load dashboard statistics

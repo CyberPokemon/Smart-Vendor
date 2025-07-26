@@ -1,8 +1,21 @@
 package com.hackops.backend.service;
 
+<<<<<<< HEAD
+import com.hackops.backend.dto.vendor.IngredientResponseDTO;
+import com.hackops.backend.dto.vendor.IngredientUsageRequestDTO;
+import com.hackops.backend.dto.vendor.IngredientUsageResponseDTO;
+import com.hackops.backend.dto.vendor.RequestIngridientsDTO;
+import com.hackops.backend.model.IngredientUsageLog;
+import com.hackops.backend.model.Users;
+import com.hackops.backend.model.VendorIngridientList;
+import com.hackops.backend.repository.IngredientUsageLogRepository;
+import com.hackops.backend.repository.UserRepository;
+import com.hackops.backend.repository.VendorRepository;
+=======
 import com.hackops.backend.dto.vendor.*;
 import com.hackops.backend.model.*;
 import com.hackops.backend.repository.*;
+>>>>>>> 090bac8c83e63b081cf1797d2e4aba190f197298
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,12 +37,15 @@ public class VendorService {
     @Autowired
     private IngredientUsageLogRepository ingredientUsageLogRepository;
 
+<<<<<<< HEAD
+=======
     @Autowired
     private VendorDetailsRepository vendorDetailsRepository;
 
     @Autowired
     private MenuItemRepository menuItemRepository;
 
+>>>>>>> 090bac8c83e63b081cf1797d2e4aba190f197298
 
     public void registerIngridients(List<RequestIngridientsDTO> requestIngridientsDTO, String username) {
         Users user = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found"));
@@ -144,6 +160,8 @@ public class VendorService {
                 .map(log -> new IngredientUsageResponseDTO(log.getIngredientName(), log.getQuantityBought(), log.getQuantityUsed(), log.getDate().toString()))
                 .collect(Collectors.toList());
     }
+<<<<<<< HEAD
+=======
 //
 //    public void setDetails(VendorDetailsDTO vendorDetailsDTO, String username) {
 //        Users user =  userRepository.findByUsername(username)
@@ -217,5 +235,6 @@ public class VendorService {
                 .map(item -> new MenuItemDTO(item.getFoodName(), item.getIngredientNames()))
                 .collect(Collectors.toList());
     }
+>>>>>>> 090bac8c83e63b081cf1797d2e4aba190f197298
 
 }

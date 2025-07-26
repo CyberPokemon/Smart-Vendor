@@ -603,3 +603,29 @@ body {
     font-size: 1.5rem;
   }
 }
+
+/* Toggle Button Styles */
+.toggle-btn {
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+  font-size: inherit;
+  transition: color 0.3s ease;
+}
+
+.toggle-btn:hover {
+  color: var(--primary-hover);
+}
+
+/* Form Animation */
+.auth-form {
+  transition: all 0.3s ease;
+}
+
+.auth-header h1, .auth-header p {
+  transition: all 0.3s ease;
+}

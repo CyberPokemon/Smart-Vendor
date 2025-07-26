@@ -1,42 +1,164 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>StreetSource Login</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - StreetSource</title>
+    <link rel="stylesheet" href="sliding-auth.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-  <div class="container">
-    <div class="switcher">
-      <button id="vendorBtn">Vendor Login</button>
-      <button id="supplierBtn">Supplier Login</button>
+    <div class="sliding-container" id="container">
+        <!-- Sign Up Container (Registration Options) -->
+        <div class="form-container sign-up-container">
+            <form class="auth-form">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <span class="logo-text">StreetSource</span>
+                </div>
+                <h1>Create Account</h1>
+                <p>Choose how you'd like to register</p>
+                
+                <div class="register-options">
+                    <button type="button" class="social-btn google" onclick="socialLogin('google')">
+                        <i class="fab fa-google"></i>
+                        Continue with Google
+                    </button>
+                    
+                    <button type="button" class="social-btn facebook" onclick="socialLogin('facebook')">
+                        <i class="fab fa-facebook-f"></i>
+                        Continue with Facebook
+                    </button>
+                    
+                    <div class="divider">OR</div>
+                    
+                    <button type="button" onclick="goToRegister()">
+                        <i class="fas fa-user-plus"></i>
+                        Continue with Email
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Sign In Container -->
+        <div class="form-container sign-in-container">
+            <form class="auth-form">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <span class="logo-text">StreetSource</span>
+                </div>
+                <h1>Welcome Back</h1>
+                <p>Sign in to your account to continue</p>
+                
+                <input type="email" id="email" placeholder="Email Address" required />
+                <input type="password" id="password" placeholder="Password" required />
+                
+                <div class="form-options">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="rememberMe">
+                        Remember me
+                    </label>
+                    <a href="forgot-password.html" class="forgot-link">Forgot password?</a>
+                </div>
+                
+                <button type="button" onclick="handleLogin()">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Sign In
+                </button>
+            </form>
+        </div>
+
+        <!-- Overlay Container -->
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                    <h1>Welcome Back!</h1>
+                    <p>To keep connected with us please login with your personal info</p>
+                    <button class="ghost" id="signIn">Sign In</button>
+                </div>
+                <div class="overlay-panel overlay-right">
+                    <h1>Hello, Friend!</h1>
+                    <p>Enter your personal details and start your journey with us</p>
+                    <button class="ghost" id="signUp">Sign Up</button>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="slider" id="slider">
-      <div class="form vendor-form">
-        <h2>Vendor Login</h2>
-        <input type="text" placeholder="Vendor ID" required>
-        <input type="password" placeholder="Password" required>
-        <button>Login</button>
-      </div>
+    <script>
+        // Sliding panel functionality
+        const signUpButton = document.getElementById('signUp');
+        const signInButton = document.getElementById('signIn');
+        const container = document.getElementById('container');
 
-      <div class="form supplier-form">
-        <h2>Supplier Login</h2>
-        <input type="text" placeholder="Supplier ID" required>
-        <input type="password" placeholder="Password" required>
-        <button>Login</button>
-      </div>
-    </div>
-  </div>
+        signUpButton.addEventListener('click', () => {
+            container.classList.add("right-panel-active");
+        });
 
-  <script>
-    const slider = document.getElementById("slider");
-    document.getElementById("vendorBtn").onclick = () => {
-      slider.style.transform = "translateX(0%)";
-    };
-    document.getElementById("supplierBtn").onclick = () => {
-      slider.style.transform = "translateX(-50%)";
-    };
-  </script>
+        signInButton.addEventListener('click', () => {
+            container.classList.remove("right-panel-active");
+        });
+
+        // Handle login with any credentials
+        function handleLogin() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            if (!email || !password) {
+                alert('Please enter email and password');
+                return;
+            }
+            
+            // Accept any credentials - set user type based on email
+            let userType = 'vendor';
+            let setupComplete = false;
+            
+            if (email.includes('supplier')) {
+                userType = 'supplier';
+            } else if (email.includes('vendor2') || email.includes('demo2') || email.includes('returning')) {
+                setupComplete = true;
+            }
+            
+            // Store user data
+            localStorage.setItem('streetsource_token', 'demo_token_' + Date.now());
+            localStorage.setItem('streetsource_user', JSON.stringify({
+                email: email,
+                userType: userType,
+                profileSetupComplete: setupComplete
+            }));
+            
+            // Redirect based on user type and setup status
+            if (userType === 'supplier') {
+                window.location.href = 'supplier-dashboard.html';
+            } else if (setupComplete) {
+                window.location.href = 'prediction-dashboard.html';
+            } else {
+                window.location.href = 'basic-details.html';
+            }
+        }
+
+        // Social login placeholder
+        function socialLogin(provider) {
+            alert(`${provider} login will be implemented soon! For now, use the "Continue with Email" option.`);
+        }
+
+        // Redirect to register page
+        function goToRegister() {
+            window.location.href = 'register.html';
+        }
+
+        // Enter key support
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                if (!container.classList.contains('right-panel-active')) {
+                    handleLogin();
+                }
+            }
+        });
+    </script>
 </body>
 </html>
