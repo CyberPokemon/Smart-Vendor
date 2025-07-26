@@ -77,6 +77,7 @@ function submitIngredients() {
             console.log(result);
             document.getElementById("ingredientForm").classList.add("hidden");
             document.getElementById("successMessage").classList.remove("hidden");
+            window.location.href = 'vendor_entry.html';
         })
         .catch(err => {
             console.error(err);

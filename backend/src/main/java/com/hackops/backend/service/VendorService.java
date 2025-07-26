@@ -91,6 +91,18 @@ public class VendorService {
                 .collect(Collectors.toList());
     }
 
+    public List<String> getIngredientNamesByUsername(String username) {
+        Users user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        List<VendorIngridientList> ingredientList = vendorRepository.findByUser(user);
+
+        return ingredientList.stream()
+                .map(VendorIngridientList::getIngridientName)
+                .collect(Collectors.toList());
+    }
+
+
 
     public void saveDailyUsage(String username, List<IngredientUsageRequestDTO> entries) {
         Users user = userRepository.findByUsername(username)

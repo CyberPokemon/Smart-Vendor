@@ -160,5 +160,17 @@ public class VendorController {
         }
     }
 
+    @GetMapping("/getingredientnames")
+    public ResponseEntity<?> getIngredientNames(@RequestHeader("Authorization") String token) {
+        String username = jwtService.extractUsername(token.substring(7));
+        try {
+            List<String> ingredients = vendorService.getIngredientNamesByUsername(username);
+            return ResponseEntity.ok(ingredients);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(new ApiResponseMessageDTO(e.getMessage()));
+        }
+    }
+
+
 
 }
