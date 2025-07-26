@@ -1,14 +1,19 @@
 package com.hackops.backend.service;
 
 import com.hackops.backend.dto.vendor.IngredientResponseDTO;
+import com.hackops.backend.dto.vendor.IngredientUsageRequestDTO;
 import com.hackops.backend.dto.vendor.RequestIngridientsDTO;
+import com.hackops.backend.model.IngredientUsageLog;
 import com.hackops.backend.model.Users;
 import com.hackops.backend.model.VendorIngridientList;
+import com.hackops.backend.repository.IngredientUsageLogRepository;
 import com.hackops.backend.repository.UserRepository;
 import com.hackops.backend.repository.VendorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -21,6 +26,9 @@ public class VendorService {
 
     @Autowired
     private VendorRepository vendorRepository;
+
+    @Autowired
+    private IngredientUsageLogRepository ingredientUsageLogRepository;
 
 
     public void registerIngridients(List<RequestIngridientsDTO> requestIngridientsDTO, String username) {
@@ -80,5 +88,30 @@ public class VendorService {
                 .collect(Collectors.toList());
     }
 
+
+    public void saveDailyUsage(String username, List<IngredientUsageRequestDTO> entries) {
+        Users user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        for (IngredientUsageRequestDTO dto : entries) {
+            LocalDate date;
+            if (dto.getDate() != null) {
+                date = LocalDate.parse(dto.getDate());
+            } else {
+                // Convert current UTC time to IST
+                ZoneId istZone = ZoneId.of("Asia/Kolkata");
+                date = LocalDate.now(istZone);
+            }
+
+            IngredientUsageLog log = new IngredientUsageLog();
+            log.setUser(user);
+            log.setIngredientName(dto.getIngredientName());
+            log.setQuantityBought(dto.getQuantityBought());
+            log.setQuantityUsed(dto.getQuantityUsed());
+            log.setDate(date);
+
+            ingredientUsageLogRepository.save(log);
+        }
+    }
 
 }

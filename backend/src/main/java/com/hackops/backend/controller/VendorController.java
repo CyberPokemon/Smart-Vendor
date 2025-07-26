@@ -1,6 +1,7 @@
 package com.hackops.backend.controller;
 
 import com.hackops.backend.dto.ApiResponseMessageDTO;
+import com.hackops.backend.dto.vendor.DailyUsageEntryDTO;
 import com.hackops.backend.dto.vendor.IngredientResponseDTO;
 import com.hackops.backend.dto.vendor.RequestIngridientsDTO;
 import com.hackops.backend.service.JWTService;
@@ -61,6 +62,20 @@ public class VendorController {
             return ResponseEntity.badRequest().body(new ApiResponseMessageDTO(e.getMessage()));
         }
 
+    }
+
+    @PostMapping("/setdailyusage")
+    public ResponseEntity<ApiResponseMessageDTO> logDailyUsage(@RequestBody DailyUsageEntryDTO request, @RequestHeader("Authorization") String token) {
+
+        String username = jwtService.extractUsername(token.substring(7));
+
+        try
+        {
+            vendorService.saveDailyUsage(username, request.getEntries());
+            return ResponseEntity.ok(new ApiResponseMessageDTO("Ingredient usage recorded successfully"));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(new ApiResponseMessageDTO(e.getMessage()));
+        }
     }
 
 
