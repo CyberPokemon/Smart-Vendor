@@ -1,14 +1,8 @@
 package com.hackops.backend.service;
 
 import com.hackops.backend.dto.vendor.*;
-import com.hackops.backend.model.IngredientUsageLog;
-import com.hackops.backend.model.Users;
-import com.hackops.backend.model.VendorDetails;
-import com.hackops.backend.model.VendorIngridientList;
-import com.hackops.backend.repository.IngredientUsageLogRepository;
-import com.hackops.backend.repository.UserRepository;
-import com.hackops.backend.repository.VendorDetailsRepository;
-import com.hackops.backend.repository.VendorRepository;
+import com.hackops.backend.model.*;
+import com.hackops.backend.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +26,9 @@ public class VendorService {
 
     @Autowired
     private VendorDetailsRepository vendorDetailsRepository;
+
+    @Autowired
+    private MenuItemRepository menuItemRepository;
 
 
     public void registerIngridients(List<RequestIngridientsDTO> requestIngridientsDTO, String username) {
@@ -173,6 +170,26 @@ public class VendorService {
         }
 
         vendorDetailsRepository.save(vendorDetails);
+    }
+
+    public void addOrUpdateMenuItem(String username, MenuItemDTO menuItemDTO) {
+        Users user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        Optional<MenuItem> existingItem = menuItemRepository.findByUserAndFoodName(user, menuItemDTO.getFoodName());
+
+        MenuItem item;
+        if (existingItem.isPresent()) {
+            item = existingItem.get();
+            item.setIngredientNames(menuItemDTO.getIngredientNames());
+        } else {
+            item = new MenuItem();
+            item.setUser(user);
+            item.setFoodName(menuItemDTO.getFoodName());
+            item.setIngredientNames(menuItemDTO.getIngredientNames());
+        }
+
+        menuItemRepository.save(item);
     }
 
 }

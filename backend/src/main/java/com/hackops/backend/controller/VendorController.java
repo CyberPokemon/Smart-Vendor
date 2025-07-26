@@ -133,4 +133,31 @@ public class VendorController {
             return ResponseEntity.badRequest().body(new ApiResponseMessageDTO(e.getMessage()));
         }
     }
+
+    @PostMapping("/addmenuitem")
+    public ResponseEntity<?> addMenuItem(
+            @RequestHeader("Authorization") String token,
+            @RequestBody MenuItemDTO menuItemDTO
+    ) {
+        String username = jwtService.extractUsername(token.substring(7));
+        try {
+            vendorService.addOrUpdateMenuItem(username, menuItemDTO);
+            return ResponseEntity.ok(new ApiResponseMessageDTO("Menu item added/updated successfully"));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(new ApiResponseMessageDTO(e.getMessage()));
+        }
+    }
+
+    @GetMapping("/getmenu")
+    public ResponseEntity<?> getMenu(@RequestHeader("Authorization") String token) {
+        String username = jwtService.extractUsername(token.substring(7));
+        try {
+            List<MenuItemDTO> menu = vendorService.getMenuForUser(username);
+            return ResponseEntity.ok(menu);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(new ApiResponseMessageDTO(e.getMessage()));
+        }
+    }
+
+
 }
