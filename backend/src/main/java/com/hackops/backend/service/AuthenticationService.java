@@ -1,8 +1,8 @@
 package com.hackops.backend.service;
 
-import com.hackops.backend.dto.AuthenticationResponseDTO;
-import com.hackops.backend.dto.LoginRequestDTO;
-import com.hackops.backend.dto.RegisterRequestDTO;
+import com.hackops.backend.dto.Authentication.AuthenticationResponseDTO;
+import com.hackops.backend.dto.Authentication.LoginRequestDTO;
+import com.hackops.backend.dto.Authentication.RegisterRequestDTO;
 import com.hackops.backend.model.Users;
 import com.hackops.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

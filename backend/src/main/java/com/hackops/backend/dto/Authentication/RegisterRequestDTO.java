@@ -1,4 +1,4 @@
-package com.hackops.backend.dto;
+package com.hackops.backend.dto.Authentication;
 
 public class RegisterRequestDTO {
 
