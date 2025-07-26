@@ -36,4 +36,18 @@ public class VendorController {
             return ResponseEntity.badRequest().body(new ApiResponseMessageDTO(e.getMessage()));
         }
     }
+
+    @PutMapping("/updateingredientlist")
+    public ResponseEntity<ApiResponseMessageDTO> updateIngredients(@RequestBody List<RequestIngridientsDTO> updatedIngredients, @RequestHeader("Authorization") String token) {
+
+        String username = jwtService.extractUsername(token.substring(7));
+        try{
+            vendorService.updateIngredients(updatedIngredients, username);
+            return ResponseEntity.ok(new ApiResponseMessageDTO("Ingredients updated successfully"));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(new ApiResponseMessageDTO(e.getMessage()));
+        }
+
+    }
+
 }
