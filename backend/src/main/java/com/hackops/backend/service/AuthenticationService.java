@@ -1,11 +1,15 @@
 package com.hackops.backend.service;
 
 import com.hackops.backend.dto.AuthenticationResponseDTO;
+import com.hackops.backend.dto.LoginRequestDTO;
 import com.hackops.backend.dto.RegisterRequestDTO;
 import com.hackops.backend.model.Users;
 import com.hackops.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -75,4 +79,41 @@ public class AuthenticationService {
         }
     }
 
+    public AuthenticationResponseDTO login(LoginRequestDTO request) {
+
+        Authentication authentication;
+        try {
+            authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+        } catch (AuthenticationException e) {
+            return new AuthenticationResponseDTO("",
+                    request.getUsername(),
+                    "",
+                    "",
+                    "Login failed");
+        }
+        if(authentication.isAuthenticated())
+        {
+            Users user = usersRepository.findByUsername(request.getUsername())
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+
+            String jwttoken = jwtService.generateToken(user.getUsername());
+
+            return new AuthenticationResponseDTO(
+                    jwttoken,
+                    user.getUsername(),
+                    user.getEmailAddress(),
+                    user.getRole(),
+                    "Login successful"
+            );
+
+        }
+        else
+        {
+            return new AuthenticationResponseDTO("",
+                    request.getUsername(),
+                    "",
+                    "",
+                    "Login failed");
+        }
+    }
 }

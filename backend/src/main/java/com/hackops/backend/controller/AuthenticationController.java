@@ -1,6 +1,7 @@
 package com.hackops.backend.controller;
 
 import com.hackops.backend.dto.AuthenticationResponseDTO;
+import com.hackops.backend.dto.LoginRequestDTO;
 import com.hackops.backend.dto.RegisterRequestDTO;
 import com.hackops.backend.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,19 @@ public class AuthenticationController {
     {
         AuthenticationResponseDTO registerRespone = authenticationService.register(request);
         if(registerRespone.getMessage().equals("Registration successful"))
+        {
+            return ResponseEntity.ok(registerRespone);
+        }
+        else
+        {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(registerRespone);
+        }
+    }
+    @PostMapping("/login")
+    public ResponseEntity<AuthenticationResponseDTO> login(@RequestBody LoginRequestDTO request)
+    {
+        AuthenticationResponseDTO registerRespone = authenticationService.login(request);
+        if(registerRespone.getMessage().equals("Login successful"))
         {
             return ResponseEntity.ok(registerRespone);
         }
