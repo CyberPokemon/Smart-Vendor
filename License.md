@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2025 IMON MALLIK, ARGHADEEP TAMBOLI, ABHILASHA SHEE, SOUMI SAHU, TRITIYA BHATTACHARYA
+Copyright (c) 2025 IMON MALLIK, ARGHADEEP TAMBULI, ABHILASHA SHEE, SOUMI SAHU, TRITIYA BHATTACHARYA
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
