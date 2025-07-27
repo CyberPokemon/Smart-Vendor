@@ -60,15 +60,15 @@ Smart-Vendor/
 - Password: `demo123`
 
 ---
-
+<!-- 
 ## 🖥️ Screenshots
 
 <p align="center">
   <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=600&q=80" width="350" alt="Dashboard"/>
   <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80" width="350" alt="Analytics"/>
-</p>
+</p> -->
 
----
+<!-- --- -->
 
 ## ⚡ Quick Start
 
