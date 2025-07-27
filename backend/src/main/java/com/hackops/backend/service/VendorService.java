@@ -1,14 +1,34 @@
 package com.hackops.backend.service;
 
-import com.hackops.backend.dto.vendor.*;
-import com.hackops.backend.model.*;
-import com.hackops.backend.repository.*;
+import com.hackops.backend.dto.vendor.IngredientListDTO;
+import com.hackops.backend.dto.vendor.IngredientResponseDTO;
+import com.hackops.backend.dto.vendor.IngredientUsageRequestDTO;
+import com.hackops.backend.dto.vendor.IngredientUsageResponseDTO;
+import com.hackops.backend.dto.vendor.MenuItemDTO;
+import com.hackops.backend.dto.vendor.RequestIngridientsDTO;
+import com.hackops.backend.dto.vendor.VendorDetailsDTO;
+import com.hackops.backend.model.Ingredient;
+import com.hackops.backend.model.IngredientUsageLog;
+import com.hackops.backend.model.MenuItem;
+import com.hackops.backend.model.Users;
+import com.hackops.backend.model.VendorDetails;
+import com.hackops.backend.model.VendorIngridientList;
+import com.hackops.backend.repository.IngredientUsageLogRepository;
+import com.hackops.backend.repository.MenuItemRepository;
+import com.hackops.backend.repository.UserRepository;
+import com.hackops.backend.repository.VendorDetailsRepository;
+import com.hackops.backend.repository.VendorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -167,49 +187,12 @@ public class VendorService {
         if (optionalVendorDetails.isPresent()) {
             vendorDetails = optionalVendorDetails.get();
             vendorDetails.setTypesOfFood(vendorDetailsDTO.getTypesOfFood());
-//            vendorDetails.setVegNonVeg(vendorDetailsDTO.getVegNonVeg());
         } else {
-//            vendorDetails = new VendorDetails(user, vendorDetailsDTO.getTypesOfFood(), vendorDetailsDTO.getVegNonVeg());
             vendorDetails = new VendorDetails(user, vendorDetailsDTO.getTypesOfFood());
         }
 
         vendorDetailsRepository.save(vendorDetails);
     }
-
-//    public void syncMenu(String username, List<MenuItemDTO> newMenu) {
-//        Users user = userRepository.findByUsername(username)
-//                .orElseThrow(() -> new RuntimeException("User not found"));
-//
-//        List<MenuItem> existingMenu = menuItemRepository.findByUser(user);
-//
-//        Map<String, MenuItem> existingMap = existingMenu.stream()
-//                .collect(Collectors.toMap(MenuItem::getFoodName, item -> item));
-//
-//        Set<String> incomingFoodNames = new HashSet<>();
-//
-//        for (MenuItemDTO dto : newMenu) {
-//            incomingFoodNames.add(dto.getFoodName());
-//            if (existingMap.containsKey(dto.getFoodName())) {
-//                MenuItem item = existingMap.get(dto.getFoodName());
-//                item.setIngredientNames(dto.getIngredientNames());
-//                menuItemRepository.save(item);
-//            } else {
-//
-//                MenuItem item = new MenuItem();
-//                item.setUser(user);
-//                item.setFoodName(dto.getFoodName());
-//                item.setIngredientNames(dto.getIngredientNames());
-//                menuItemRepository.save(item);
-//            }
-//        }
-//
-//        for (MenuItem existingItem : existingMenu) {
-//            if (!incomingFoodNames.contains(existingItem.getFoodName())) {
-//                menuItemRepository.delete(existingItem);
-//            }
-//        }
-//    }
-
 
     public void syncMenu(String username, List<MenuItemDTO> newMenu) {
         Users user = userRepository.findByUsername(username)

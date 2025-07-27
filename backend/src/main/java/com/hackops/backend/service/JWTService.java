@@ -1,7 +1,5 @@
 package com.hackops.backend.service;
 
-import org.springframework.stereotype.Service;
-
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -10,7 +8,10 @@ import org.springframework.stereotype.Service;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import java.security.NoSuchAlgorithmException;
-import java.util.*;
+import java.util.Base64;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class JWTService {
@@ -22,11 +23,9 @@ public class JWTService {
             KeyGenerator keyGen = KeyGenerator.getInstance("hmacSHA256");
             SecretKey sk = keyGen.generateKey();
             secretkey = Base64.getEncoder().encodeToString(sk.getEncoded());
-            System.out.println("secret key = "+secretkey); //Testing implementation
         }
         catch (NoSuchAlgorithmException e)
         {
-            System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -46,19 +45,17 @@ public class JWTService {
                     .parseSignedClaims(token)
                     .getPayload()
                     .getSubject();
-            System.out.println("Extracted username = "+username);
             return username;
         }
         catch (Exception e)
         {
-            System.out.println("JWT Token parsing error: " + e.getMessage());
             return null;
         }
     }
 
     public String generateToken(String username) {
 
-        Map<String, Objects> claims = new HashMap<>();
+        Map<String, Object> claims = new HashMap<>();
 
         return Jwts.builder()
                 .claims()

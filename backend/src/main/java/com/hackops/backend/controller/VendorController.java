@@ -1,13 +1,25 @@
 package com.hackops.backend.controller;
 
 import com.hackops.backend.dto.ApiResponseMessageDTO;
-import com.hackops.backend.dto.vendor.*;
+import com.hackops.backend.dto.vendor.DailyUsageEntryDTO;
+import com.hackops.backend.dto.vendor.IngredientResponseDTO;
+import com.hackops.backend.dto.vendor.IngredientUsageResponseDTO;
+import com.hackops.backend.dto.vendor.MenuItemDTO;
+import com.hackops.backend.dto.vendor.RequestIngridientsDTO;
+import com.hackops.backend.dto.vendor.VendorDetailsDTO;
 import com.hackops.backend.service.GeminiService;
 import com.hackops.backend.service.JWTService;
 import com.hackops.backend.service.VendorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -29,7 +41,6 @@ public class VendorController {
     @PostMapping("/setdetails")
     public ResponseEntity<?> setDetails(@RequestHeader("Authorization") String token, @RequestBody VendorDetailsDTO vendorDetailsDTO)
     {
-        System.out.println("token = "+ token);
         String username = jwtService.extractUsername(token.substring(7));
 
         try{
@@ -44,9 +55,7 @@ public class VendorController {
     @PostMapping("/addingredientList")
     public ResponseEntity<ApiResponseMessageDTO> registerIngridients(@RequestBody List<RequestIngridientsDTO> requestIngridientsDTO, @RequestHeader("Authorization") String token)
     {
-        System.out.println("token = "+ token);
         String username = jwtService.extractUsername(token.substring(7));
-        System.out.println("add ingridients username = "+username);
 
         try
         {
@@ -87,7 +96,6 @@ public class VendorController {
     public ResponseEntity<ApiResponseMessageDTO> logDailyUsage(@RequestBody DailyUsageEntryDTO request, @RequestHeader("Authorization") String token) {
 
         String username = jwtService.extractUsername(token.substring(7));
-        System.out.println("username = "+username);
 
         try
         {

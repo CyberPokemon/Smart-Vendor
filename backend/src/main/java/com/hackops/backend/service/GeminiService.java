@@ -69,11 +69,7 @@ public class GeminiService {
                     )
             );
 
-            System.out.println("request body : "+requestbody);
-
-//            return "good";
-
-            // Send prompt to Gemini (replace if you're using Google Vertex AI or other)
+            // Send prompt to Gemini
             String response = webClient.post()
                     .uri(geminiApiUrl)
                     .header("Content-Type", "application/json")
@@ -82,10 +78,6 @@ public class GeminiService {
                     .retrieve()
                     .bodyToMono(String.class)
                     .block();
-
-            System.out.println("response = "+response);
-
-//            return response;
 
             String rawText = objectMapper.readTree(response)
                     .get("candidates").get(0)
@@ -98,14 +90,8 @@ public class GeminiService {
 
             String unescapedJson = StringEscapeUtils.unescapeJson(cleaned);
 
-            System.out.println("Cleaned JSON: " + unescapedJson);
-//            return objectMapper.readValue(unescapedJson,
-//                    new TypeReference<Map<String, Map<String, List<Double>>>>() {});
-
             return objectMapper.readValue(unescapedJson,
                     new TypeReference<Map<String, Map<String, Double>>>() {});
-
-//            return unescapedJson;
         } catch (Exception e) {
             throw new RuntimeException("Failed to call Gemini API: " + e.getMessage(), e);
         }
