@@ -13,12 +13,7 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-left">
-                <a href="index.html" class="back-link">
-                    <i class="fas fa-arrow-left"></i>
-                    <span>Back to Home</span>
-                </a>
-                <div class="nav-divider"></div>
-                <div class="logo">
+                <div class="logo" onclick="window.location.href='index.html'" style="cursor: pointer;">
                     <div class="logo-icon">
                         <i class="fas fa-chart-pie"></i>
                     </div>
@@ -26,6 +21,9 @@
                 </div>
             </div>
             <div class="nav-right">
+                <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode">
+                    <i class="fas fa-moon"></i>
+                </button>
                 <div class="badge badge-success">Sales Analytics</div>
                 <div id="userMenu" class="user-menu">
                     <span id="userName">User</span>
@@ -261,5 +259,6 @@
     </div>
 
     <script src="sales-analytics.js"></script>
+    <script src="animations.js"></script>
 </body>
 </html>

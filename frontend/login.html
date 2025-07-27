@@ -49,17 +49,15 @@
                 </div>
                 <h1>Welcome Back</h1>
                 <p>Sign in to your account to continue</p>
+                
+                <div style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 8px; padding: 0.75rem; margin-bottom: 1rem; font-size: 0.8rem; color: var(--text-secondary);">
+                    <strong>Demo Login:</strong><br>
+                    Username: <code>demo</code><br>
+                    Password: <code>demo123</code>
+                </div>
 
-                <input type="text" id="email" placeholder="username" required />
+                <input type="text" id="email" placeholder="Username" required />
                 <input type="password" id="password" placeholder="Password" required />
-
-                <!-- <div class="form-options">
-                    <label class="checkbox-label">
-                        <input type="checkbox" id="rememberMe">
-                        Remember me
-                    </label>
-                    <a href="forgot-password.html" class="forgot-link">Forgot password?</a>
-                </div> -->
 
                 <button type="button" onclick="handleLogin()">
                     <i class="fas fa-sign-in-alt"></i>
@@ -111,6 +109,25 @@
                 return;
             }
 
+            // Demo user for testing
+            if (email === 'demo' && password === 'demo123') {
+                alert('Welcome to Demo Account!\nLogged in as: Demo Vendor');
+                
+                // Store demo user info
+                localStorage.setItem('jwtToken', 'demo-jwt-token-12345');
+                localStorage.setItem('user', JSON.stringify({
+                    username: 'demo',
+                    role: 'VENDOR',
+                    firstName: 'Demo',
+                    businessName: 'Demo Street Food',
+                    address: '123 Demo Street, Demo City'
+                }));
+
+                // Redirect to dashboard
+                window.location.href = 'vendor-dashboard.html';
+                return;
+            }
+
             // Convert email to username for backend
             // const username = email.split('@')[0]; // or fetch username another way if required
 
@@ -153,11 +170,6 @@
             }
         }
 
-
-        // Social login placeholder
-        function socialLogin(provider) {
-            alert(`${provider} login will be implemented soon! For now, use the "Continue with Email" option.`);
-        }
 
         // Redirect to register page
         function goToRegister() {

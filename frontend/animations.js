@@ -3,17 +3,9 @@
 // Dark mode functionality
 function initThemeToggle() {
   const themeToggle = document.getElementById('themeToggle');
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
   
-  // Always default to light theme for dashboard pages
-  const isDashboardPage = window.location.pathname.includes('vendor-dashboard') || 
-                          window.location.pathname.includes('rawmaterials') ||
-                          window.location.pathname.includes('ingredient') ||
-                          window.location.pathname.includes('sales-analytics');
-  
-  // Check for saved theme preference or default to light (especially for dashboard)
-  const currentTheme = localStorage.getItem('theme') || 
-    (isDashboardPage ? 'light' : (prefersDark.matches ? 'dark' : 'light'));
+  // Always default to light theme for all pages
+  const currentTheme = localStorage.getItem('theme') || 'light';
   
   document.documentElement.setAttribute('data-theme', currentTheme);
   
@@ -100,6 +92,20 @@ function initNavbarScroll() {
 
 // Enhanced card parallax effect
 function initParallaxCards() {
+  // Skip parallax for specific pages
+  const skipParallaxPages = [
+    'rawmaterials', 
+    'vendor-dashboard', 
+    'sales-analytics'
+  ];
+  
+  const currentPage = window.location.pathname;
+  const shouldSkip = skipParallaxPages.some(page => currentPage.includes(page));
+  
+  if (shouldSkip) {
+    return;
+  }
+  
   document.querySelectorAll('.card').forEach(card => {
     card.addEventListener('mousemove', (e) => {
       const rect = card.getBoundingClientRect();

@@ -5,6 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Raw Materials Predictor - StreetSource</title>
+  <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="rawmaterials_predictor.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -13,12 +14,7 @@
   <nav class="navbar">
     <div class="nav-container">
       <div class="nav-left">
-        <a href="index.html" class="back-link">
-          <i class="fas fa-arrow-left"></i>
-          <span>Back to Home</span>
-        </a>
-        <div class="nav-divider"></div>
-        <div class="logo">
+        <div class="logo" onclick="window.location.href='index.html'" style="cursor: pointer;">
           <div class="logo-icon">
             <i class="fas fa-drumstick-bite"></i>
           </div>
@@ -26,6 +22,9 @@
         </div>
       </div>
       <div class="nav-right">
+        <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode">
+          <i class="fas fa-moon"></i>
+        </button>
         <div class="badge badge-primary">Raw Material Predictor</div>
       </div>
     </div>
@@ -163,6 +162,7 @@
   </div>
 
   <script src="rawmaterials_predictor.js"></script>
+  <script src="animations.js"></script>
 </body>
 
 </html>

@@ -17,12 +17,7 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-left">
-                <a href="index.html" class="back-link">
-                    <i class="fas fa-arrow-left"></i>
-                    <span>Back to Home</span>
-                </a>
-                <div class="nav-divider"></div>
-                <div class="logo">
+                <div class="logo" onclick="window.location.href='index.html'" style="cursor: pointer;">
                     <div class="logo-icon">
                         <i class="fas fa-store"></i>
                     </div>
@@ -49,37 +44,244 @@
         <!-- Welcome Banner -->
         <div class="welcome-banner">
             <div class="banner-content">
-                <h1 class="banner-title">Welcome back, <span id="vendorName">Vendor</span>!</h1>
-                <p class="banner-description">
-                    <strong>Business:</strong> <span id="vendorBusiness">Your Business</span><br>
-                    <strong>Address:</strong> <span id="vendorAddress">Your Address</span>
-                </p>
-
-                <p class="banner-description">Enter your raw material Consumption and get AI-powered predictions for raw
-                    materials</p>
+                <h1 class="banner-title">Welcome back, <span id="vendorName">Rajesh Kumar</span>!</h1>
+                <p class="banner-description">Track your sales and get AI-powered predictions for raw materials</p>
             </div>
-
-        </div>
-
-
-
-
-        <!-- Menu Section -->
-        <div class="menu-section">
-            <h2 class="section-title">Your Menu</h2>
-            <div id="menuItemsContainer" class="menu-items-grid">
-                <!-- Menu items will be injected here -->
+            <div class="banner-stats">
+                <div class="stat-item">
+                    <div class="stat-value" id="todaySales">₹0</div>
+                    <div class="stat-label">Today's Sales</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="weekSales">₹0</div>
+                    <div class="stat-label">This Week</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="monthSales">₹0</div>
+                    <div class="stat-label">This Month</div>
+                </div>
             </div>
         </div>
 
-        <!-- Navigation Buttons -->
-        <div class="dashboard-actions">
-            <button onclick="window.location.href='rawmaterials_predictor.html'" class="btn btn-primary">
-                <i class="fas fa-robot"></i>  Raw Material Entry and AI Predictions
-            </button>
+        <!-- Daily Sales Entry -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">
+                    <i class="fas fa-plus-circle"></i>
+                    Record Today's Sales
+                </h2>
+                <p class="card-description">Enter your daily food sales and raw material usage</p>
+            </div>
+            <div class="card-content">
+                <form id="salesEntryForm" class="sales-form">
+                    <div class="form-section">
+                        <h3 class="section-title">Food Items Sold</h3>
+                        <div id="foodItemsContainer" class="food-items-container">
+                            <div class="food-item-row">
+                                <div class="form-group">
+                                    <label>Food Item</label>
+                                    <select class="food-item-select" name="foodItem">
+                                        <option value="">Select Item</option>
+                                        <option value="pani-puri">Pani Puri</option>
+                                        <option value="bhel-puri">Bhel Puri</option>
+                                        <option value="dosa">Dosa</option>
+                                        <option value="vada-pav">Vada Pav</option>
+                                        <option value="samosa">Samosa</option>
+                                        <option value="chai">Chai</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Quantity Sold</label>
+                                    <input type="number" name="quantity" placeholder="e.g., 50" min="0">
+                                </div>
+                                <div class="form-group">
+                                    <label>Revenue (₹)</label>
+                                    <input type="number" name="revenue" placeholder="e.g., 500" min="0">
+                                </div>
+                                <button type="button" class="btn-remove" onclick="removeFoodItem(this)">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <button type="button" id="addFoodItem" class="btn btn-outline">
+                            <i class="fas fa-plus"></i>
+                            Add Another Item
+                        </button>
+                    </div>
+
+                    <div class="form-section">
+                        <h3 class="section-title">Raw Materials Purchased & Used</h3>
+                        <div id="rawMaterialsContainer" class="raw-materials-container">
+                            <div class="raw-material-row">
+                                <div class="form-group">
+                                    <label>Ingredient Name</label>
+                                    <select class="raw-material-select" name="ingredientName">
+                                        <option value="">Select Ingredient</option>
+                                        <option value="Tomatoes">Tomatoes</option>
+                                        <option value="Onions">Onions</option>
+                                        <option value="Potatoes">Potatoes</option>
+                                        <option value="Oil">Oil</option>
+                                        <option value="Flour">Flour</option>
+                                        <option value="Rice">Rice</option>
+                                        <option value="Spices">Spices</option>
+                                        <option value="Green Chilies">Green Chilies</option>
+                                        <option value="Garlic">Garlic</option>
+                                        <option value="Ginger">Ginger</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Quantity Bought</label>
+                                    <input type="number" name="quantityBought" placeholder="e.g., 10" min="0" step="0.1" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Quantity Used</label>
+                                    <input type="number" name="quantityUsed" placeholder="e.g., 8" min="0" step="0.1" required>
+                                </div>
+                                <button type="button" class="btn-remove" onclick="removeRawMaterial(this)">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <button type="button" id="addRawMaterial" class="btn btn-outline">
+                            <i class="fas fa-plus"></i>
+                            Add Another Material
+                        </button>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i>
+                            Save Today's Data
+                        </button>
+                        <button type="button" id="getPrediction" class="btn btn-success">
+                            <i class="fas fa-brain"></i>
+                            Get AI Prediction
+                        </button>
+                        <button onclick="window.location.href='rawmaterials_predictor.html'" class="btn btn-outline">
+                            <i class="fas fa-chart-line"></i>
+                            Raw Materials Predictor
+                        </button>
+                        <button onclick="window.location.href='sales-analytics.html'" class="btn btn-secondary">
+                            <i class="fas fa-analytics"></i>
+                            Sales Analytics
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
 
+        <!-- Usage Analytics -->
+        <div class="card" id="usageAnalyticsCard">
+            <div class="card-header">
+                <h2 class="card-title">
+                    <i class="fas fa-chart-bar"></i>
+                    Ingredient Usage Analytics
+                </h2>
+                <div class="analytics-controls">
+                    <button type="button" class="btn btn-sm btn-outline" onclick="loadTodaysUsage()">Today</button>
+                    <button type="button" class="btn btn-sm btn-outline" onclick="loadWeeklyUsage()">This Week</button>
+                    <button type="button" class="btn btn-sm btn-outline" onclick="loadMonthlyUsage()">This Month</button>
+                    <div class="date-range-picker">
+                        <input type="date" id="startDate" class="form-control">
+                        <span>to</span>
+                        <input type="date" id="endDate" class="form-control">
+                        <button type="button" class="btn btn-sm btn-primary" onclick="loadCustomRange()">Load</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-content">
+                <div id="usageDataContainer">
+                    <p class="text-muted">Select a time period to view usage data</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Predictions -->
+        <div class="card" id="predictionsCard" style="display: none;">
+            <div class="card-header">
+                <h2 class="card-title">
+                    <i class="fas fa-robot"></i>
+                    AI Predictions for Tomorrow
+                </h2>
+                <p class="card-description">Based on your sales patterns and market trends</p>
+            </div>
+            <div class="card-content">
+                <div class="prediction-summary">
+                    <div class="prediction-stats">
+                        <div class="prediction-stat">
+                            <div class="stat-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="stat-details">
+                                <h4 id="predictedSales">₹0</h4>
+                                <p>Predicted Sales</p>
+                            </div>
+                        </div>
+                        <div class="prediction-stat">
+                            <div class="stat-icon">
+                                <i class="fas fa-percentage"></i>
+                            </div>
+                            <div class="stat-details">
+                                <h4 id="confidenceLevel">0%</h4>
+                                <p>Confidence Level</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="materials-needed">
+                    <h3>Recommended Raw Materials to Order</h3>
+                    <div id="materialsList" class="materials-list">
+                        <!-- Dynamic content will be inserted here -->
+                    </div>
+                </div>
+
+                <div class="prediction-actions">
+                    <button id="findSuppliers" class="btn btn-primary">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Find Nearby Suppliers
+                    </button>
+                    <button id="viewAnalytics" class="btn btn-outline">
+                        <i class="fas fa-chart-bar"></i>
+                        View Detailed Analytics
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Sales History -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">
+                    <i class="fas fa-history"></i>
+                    Recent Sales History
+                </h2>
+            </div>
+            <div class="card-content">
+                <div class="sales-chart">
+                    <canvas id="salesChart"></canvas>
+                </div>
+                <div class="sales-table-container">
+                    <table class="sales-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Total Sales</th>
+                                <th>Items Sold</th>
+                                <th>Top Item</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="salesTableBody">
+                            <!-- Dynamic content will be inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
+
     <script src="vendor-dashboard.js"></script>
     <script src="animations.js"></script>
 </body>

@@ -49,6 +49,18 @@ Smart-Vendor/
 
 ---
 
+## 🌐 Live Demo
+
+**🚀 Website Deployed on Render:** [Smart Vendor Live](https://smart-vendor.onrender.com)
+
+> ⚠️ **Important Note:** The backend server is hosted on Render's free tier and may take **2-3 minutes** to start up if it has been inactive. Please be patient during the initial load time.
+
+**Demo Credentials:**
+- Username: `demo`
+- Password: `demo123`
+
+---
+
 ## 🖥️ Screenshots
 
 <p align="center">
@@ -153,6 +165,11 @@ python -m http.server 5500
   <tr>
     <td align="center">
       <img src="https://img.shields.io/badge/👩‍💻-Abhilasha%20Shee-orange?style=for-the-badge" alt="Abhilasha Shee"/>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="https://img.shields.io/badge/👩‍💻-Tritiya%20Bhattacharya-yellow?style=for-the-badge" alt="Tritiya Bhattacharya"/>
     </td>
   </tr>
 </table>
