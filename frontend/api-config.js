@@ -1,6 +1,6 @@
 // API Configuration for StreetSource Platform
 const API_CONFIG = {
-  BASE_URL: 'http://127.0.0.1:8080/api',
+  BASE_URL: `${API_BASE_URL}/api`,
   ENDPOINTS: {
     // Vendor Ingredient Usage APIs
     SET_DAILY_USAGE: '/vendors/setdailyusage',

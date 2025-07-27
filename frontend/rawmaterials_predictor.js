@@ -17,7 +17,7 @@ async function loadIngredientTable() {
   if (!token) return alert("Not authenticated");
 
   try {
-    const res = await fetch("http://127.0.0.1:8080/api/vendors/getingredientnames", {
+    const res = await fetch(`${API_BASE_URL}/api/vendors/getingredientnames`, {
       method: "GET",
       headers: { "Authorization": `Bearer ${token}` }
     });
@@ -78,7 +78,7 @@ submitAllBtn.addEventListener("click", async () => {
   }
 
   try {
-    const res = await fetch("http://127.0.0.1:8080/api/vendors/setdailyusage", {
+    const res = await fetch(`${API_BASE_URL}/api/vendors/setdailyusage`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -138,7 +138,7 @@ predictBtn.addEventListener("click", async () => {
   }
 
   try {
-    const response = await fetch("http://127.0.0.1:8080/api/vendors/predictionai", {
+    const response = await fetch(`${API_BASE_URL}/api/vendors/predictionai`, {
       method: "GET",
       headers: {
         "Authorization": `Bearer ${token}`
@@ -201,16 +201,16 @@ filterBtn.addEventListener("click", async () => {
   if (type === "date") {
     const date = filterDate.value;
     if (!date) return alert("Select a date");
-    url = `http://127.0.0.1:8080/api/vendors/usage/bydate?date=${date}`;
+    url = `${API_BASE_URL}/api/vendors/usage/bydate?date=${date}`;
   } else if (type === "month") {
     const [year, month] = filterMonth.value.split("-");
     if (!month || !year) return alert("Select a month");
-    url = `http://127.0.0.1:8080/api/vendors/usage/bymonth?month=${parseInt(month)}&year=${year}`;
+    url = `${API_BASE_URL}/api/vendors/usage/bymonth?month=${parseInt(month)}&year=${year}`;
   } else if (type === "range") {
     const start = startDate.value;
     const end = endDate.value;
     if (!start || !end) return alert("Select a valid range");
-    url = `http://127.0.0.1:8080/api/vendors/usage/byrange?start=${start}&end=${end}`;
+    url = `${API_BASE_URL}/api/vendors/usage/byrange?start=${start}&end=${end}`;
   } else {
     return alert("Please select a filter type.");
   }
