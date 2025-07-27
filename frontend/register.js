@@ -51,6 +51,11 @@ document.addEventListener('DOMContentLoaded', () => {
           if (response.ok) {
               showToast(result.message, true);
               localStorage.setItem("jwtToken",result.jwtToken);
+              localStorage.setItem('user', JSON.stringify({
+                username: result.username,
+                role: result.role,
+                firstName: result.username.split('@')[0] // or get from result if available
+            }));
               registerForm.reset();
               window.location.href = 'ingredient_entry.html';
           } else {
