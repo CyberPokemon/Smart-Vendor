@@ -179,7 +179,7 @@ async function fetchAvailableIngredients() {
   try {
     const token = localStorage.getItem("jwtToken"); // Make sure this is set on login
 
-    const response = await fetch("http://127.0.0.1:8080/api/vendors/getingredientnames", {
+    const response = await fetch(`${API_BASE_URL}/api/vendors/getingredientnames`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -426,7 +426,7 @@ function showPreview(data) {
     
 
     try {
-      const response = await fetch("http://127.0.0.1:8080/api/vendors/syncmenu", {
+      const response = await fetch(`${API_BASE_URL}/api/vendors/syncmenu`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
