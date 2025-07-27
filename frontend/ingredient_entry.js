@@ -64,7 +64,7 @@ function submitIngredients() {
 
     console.log(data);
 
-    fetch("http://127.0.0.1:8080/api/vendors/updateingredientlist", {
+    fetch(`${API_BASE_URL}/api/vendors/updateingredientlist`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",

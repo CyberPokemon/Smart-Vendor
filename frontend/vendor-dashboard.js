@@ -11,7 +11,7 @@ async function loadMenuItems() {
   if (!token || !container) return;
 
   try {
-    const response = await fetch(`/api/vendors/getmenu`, {
+    const response = await fetch(`${API_BASE_URL}/api/vendors/getmenu`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
