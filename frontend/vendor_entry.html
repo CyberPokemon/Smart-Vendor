@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vendor Food Entry</title>
+  <link rel="stylesheet" href="vendor_food_entry.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Vendor Food Entry</h1>
+
+    <div id="food-count-section">
+      <label for="foodCount">How many food items do you want to enter?</label>
+      <input type="number" id="foodCount" min="1" />
+      <button onclick="startEntry()">Start</button>
+    </div>
+
+    <form id="foodForm" class="hidden">
+      <!-- Food items will be injected here -->
+    </form>
+
+    <button id="submitAll" class="hidden" onclick="submitAllData()">Submit All</button>
+
+    <div id="successMessage" class="hidden">
+      <h2>Data Submitted Successfully! ✅</h2>
+    </div>
+  </div>
+
+  <script src="vendor_food_entry.js"></script>
+</body>
+</html>

@@ -1,15 +1,8 @@
 package com.hackops.backend.service;
 
-import com.hackops.backend.dto.vendor.IngredientResponseDTO;
-import com.hackops.backend.dto.vendor.IngredientUsageRequestDTO;
-import com.hackops.backend.dto.vendor.IngredientUsageResponseDTO;
-import com.hackops.backend.dto.vendor.RequestIngridientsDTO;
-import com.hackops.backend.model.IngredientUsageLog;
-import com.hackops.backend.model.Users;
-import com.hackops.backend.model.VendorIngridientList;
-import com.hackops.backend.repository.IngredientUsageLogRepository;
-import com.hackops.backend.repository.UserRepository;
-import com.hackops.backend.repository.VendorRepository;
+import com.hackops.backend.dto.vendor.*;
+import com.hackops.backend.model.*;
+import com.hackops.backend.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +24,11 @@ public class VendorService {
     @Autowired
     private IngredientUsageLogRepository ingredientUsageLogRepository;
 
+    @Autowired
+    private VendorDetailsRepository vendorDetailsRepository;
+
+    @Autowired
+    private MenuItemRepository menuItemRepository;
 
     public void registerIngridients(List<RequestIngridientsDTO> requestIngridientsDTO, String username) {
         Users user = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found"));
@@ -143,6 +141,68 @@ public class VendorService {
         return ingredientUsageLogRepository.findByUserAndDateBetween(user, start, end)
                 .stream()
                 .map(log -> new IngredientUsageResponseDTO(log.getIngredientName(), log.getQuantityBought(), log.getQuantityUsed(), log.getDate().toString()))
+                .collect(Collectors.toList());
+    }
+
+    public void setDetails(VendorDetailsDTO vendorDetailsDTO, String username) {
+        Users user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        Optional<VendorDetails> optionalVendorDetails = vendorDetailsRepository.findByUser(user);
+
+        VendorDetails vendorDetails;
+        if (optionalVendorDetails.isPresent()) {
+            vendorDetails = optionalVendorDetails.get();
+            vendorDetails.setTypesOfFood(vendorDetailsDTO.getTypesOfFood());
+            vendorDetails.setVegNonVeg(vendorDetailsDTO.getVegNonVeg());
+        } else {
+            vendorDetails = new VendorDetails(user, vendorDetailsDTO.getTypesOfFood(), vendorDetailsDTO.getVegNonVeg());
+        }
+
+        vendorDetailsRepository.save(vendorDetails);
+    }
+
+    public void syncMenu(String username, List<MenuItemDTO> newMenu) {
+        Users user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        List<MenuItem> existingMenu = menuItemRepository.findByUser(user);
+
+        Map<String, MenuItem> existingMap = existingMenu.stream()
+                .collect(Collectors.toMap(MenuItem::getFoodName, item -> item));
+
+        Set<String> incomingFoodNames = new HashSet<>();
+
+        for (MenuItemDTO dto : newMenu) {
+            incomingFoodNames.add(dto.getFoodName());
+            if (existingMap.containsKey(dto.getFoodName())) {
+                MenuItem item = existingMap.get(dto.getFoodName());
+                item.setIngredientNames(dto.getIngredientNames());
+                menuItemRepository.save(item);
+            } else {
+                MenuItem item = new MenuItem();
+                item.setUser(user);
+                item.setFoodName(dto.getFoodName());
+                item.setIngredientNames(dto.getIngredientNames());
+                menuItemRepository.save(item);
+            }
+        }
+        
+        for (MenuItem existingItem : existingMenu) {
+            if (!incomingFoodNames.contains(existingItem.getFoodName())) {
+                menuItemRepository.delete(existingItem);
+            }
+        }
+    }
+
+    public List<MenuItemDTO> getMenuForUser(String username) {
+        Users user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        List<MenuItem> menuItems = menuItemRepository.findByUser(user);
+
+        return menuItems.stream()
+                .map(item -> new MenuItemDTO(item.getFoodName(), item.getIngredientNames()))
                 .collect(Collectors.toList());
     }
 
