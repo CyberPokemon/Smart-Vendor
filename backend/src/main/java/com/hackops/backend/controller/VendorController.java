@@ -91,7 +91,7 @@ public class VendorController {
 
         try
         {
-            vendorService.saveDailyUsage(username, request.getEntries());
+            vendorService.saveDailyUsage(username, request.getEntries(),request.getMessageFromVendor());
             return ResponseEntity.ok(new ApiResponseMessageDTO("Ingredient usage recorded successfully"));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new ApiResponseMessageDTO(e.getMessage()));

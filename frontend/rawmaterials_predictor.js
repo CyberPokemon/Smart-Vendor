@@ -1,46 +1,144 @@
-const historyTableBody = document.getElementById("historyTableBody");
-const addEntryBtn = document.getElementById("addEntry");
-const predictBtn = document.getElementById("predictBtn");
-const predictionOutput = document.getElementById("predictionOutput");
+const ingredientTableBody = document.getElementById("ingredientTableBody");
+const submitAllBtn = document.getElementById("submitAllBtn");
+const entryDateInput = document.getElementById("entryDate");
+const vendorMessageInput = document.getElementById("vendorMessage");
 
-let rawMaterialData = [];
+let allIngredients = [];
 
-window.addEventListener("DOMContentLoaded", loadIngredientNames);
+window.addEventListener("DOMContentLoaded", async () => {
+  await loadIngredientTable();
+});
 
-async function loadIngredientNames() {
-  const dropdown = document.getElementById("materialName");
+async function loadIngredientTable() {
   const token = localStorage.getItem("jwtToken");
+  if (!token) return alert("Not authenticated");
 
-  if (!token) {
-    alert("User not authenticated. Please login again.");
-    return;
+  try {
+    const res = await fetch("http://127.0.0.1:8080/api/vendors/getingredientnames", {
+      method: "GET",
+      headers: { "Authorization": `Bearer ${token}` }
+    });
+
+    if (!res.ok) throw new Error("Failed to fetch ingredient names");
+
+    const names = await res.json();
+    allIngredients = names;
+
+    names.forEach(name => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${name}</td>
+        <td><input type="number" placeholder="Bought (kg)" class="form-input" data-type="bought" /></td>
+        <td><input type="number" placeholder="Used (kg)" class="form-input" data-type="used" /></td>
+        <td><input type="number" placeholder="Price (₹/kg)" class="form-input" data-type="price" /></td>
+      `;
+      row.dataset.ingredient = name;
+      ingredientTableBody.appendChild(row);
+    });
+  } catch (err) {
+    console.error("Error:", err);
+    alert("Error loading ingredient list.");
+  }
+}
+
+submitAllBtn.addEventListener("click", async () => {
+  const token = localStorage.getItem("jwtToken");
+  if (!token) return alert("User not authenticated");
+
+  const date = entryDateInput.value;
+  if (!date) return alert("Please select a date");
+
+  const message = vendorMessageInput.value.trim();
+
+  const rows = ingredientTableBody.querySelectorAll("tr");
+  const entries = [];
+
+  rows.forEach(row => {
+    const name = row.dataset.ingredient;
+    const bought = parseFloat(row.querySelector('input[data-type="bought"]').value);
+    const used = parseFloat(row.querySelector('input[data-type="used"]').value);
+    const price = parseFloat(row.querySelector('input[data-type="price"]').value);
+
+    if (!isNaN(bought) || !isNaN(used) || !isNaN(price)) {
+      entries.push({
+        ingredientName: name,
+        quantityBought: isNaN(bought) ? 0 : bought,
+        quantityUsed: isNaN(used) ? 0 : used,
+        price: isNaN(price) ? 0 : price,
+        date: date
+      });
+    }
+  });
+
+  if (entries.length === 0) {
+    return alert("Please enter at least one entry.");
   }
 
   try {
-    const response = await fetch("http://127.0.0.1:8080/api/vendors/getingredientnames", {
-      method: "GET",
+    const res = await fetch("http://127.0.0.1:8080/api/vendors/setdailyusage", {
+      method: "POST",
       headers: {
+        "Content-Type": "application/json",
         "Authorization": `Bearer ${token}`
-      }
+      },
+      body: JSON.stringify({
+        entries,
+        messageFromVendor: message
+      })
     });
 
-    if (!response.ok) {
-      throw new Error("Failed to load ingredient names");
+    if (!res.ok) {
+      const errorText = await res.text();
+      throw new Error(errorText);
     }
 
-    const ingredientNames = await response.json();
-
-    ingredientNames.forEach(name => {
-      const option = document.createElement("option");
-      option.value = name;
-      option.textContent = name;
-      dropdown.appendChild(option);
-    });
-  } catch (error) {
-    console.error("Error loading ingredients:", error);
-    alert("Unable to load ingredient names.");
+    alert("Entries submitted successfully!");
+    ingredientTableBody.innerHTML = "";
+    vendorMessageInput.value = "";
+    await loadIngredientTable();
+  } catch (err) {
+    console.error("Submission failed:", err);
+    alert("Submission failed: " + err.message);
   }
-}
+});
+
+
+// async function loadIngredientNames() {
+//   const dropdown = document.getElementById("materialName");
+//   const token = localStorage.getItem("jwtToken");
+
+//   if (!token) {
+//     alert("User not authenticated. Please login again.");
+//     return;
+//   }
+
+//   try {
+//     const response = await fetch("http://127.0.0.1:8080/api/vendors/getingredientnames", {
+//       method: "GET",
+//       headers: {
+//         "Authorization": `Bearer ${token}`
+//       }
+//     });
+
+//     if (!response.ok) {
+//       throw new Error("Failed to load ingredient names");
+//     }
+
+//     const ingredientNames = await response.json();
+
+//     ingredientNames.forEach(name => {
+//       const option = document.createElement("option");
+//       option.value = name;
+//       option.textContent = name;
+//       dropdown.appendChild(option);
+//     });
+//   } catch (error) {
+//     console.error("Error loading ingredients:", error);
+//     alert("Unable to load ingredient names.");
+//   }
+// }
+
+
 
 // addEntryBtn.addEventListener("click", () => {
 //   const date = document.getElementById("entryDate").value;
@@ -221,7 +319,7 @@ filterBtn.addEventListener("click", async () => {
       name: entry.ingredientName,
       bought: entry.quantityBought,
       used: entry.quantityUsed,
-      price: 0  // backend doesn't return price
+      price: entry.price  // backend doesn't return price
     }));
 
     updateHistoryTable();

@@ -104,7 +104,7 @@ public class VendorService {
 
 
 
-    public void saveDailyUsage(String username, List<IngredientUsageRequestDTO> entries) {
+    public void saveDailyUsage(String username, List<IngredientUsageRequestDTO> entries, String messageFromVendors) {
         Users user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
@@ -125,6 +125,7 @@ public class VendorService {
             log.setQuantityUsed(dto.getQuantityUsed());
             log.setPrice(dto.getPrice());
             log.setDate(date);
+            log.setMessageFromVendor(messageFromVendors);
 
             ingredientUsageLogRepository.save(log);
         }
