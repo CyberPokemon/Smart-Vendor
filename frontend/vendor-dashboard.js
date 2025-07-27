@@ -709,10 +709,12 @@ document.addEventListener("DOMContentLoaded", () => {
   // Global functions for table actions
   window.viewSaleDetails = (saleId) => {
     // Implement view sale details functionality
+    console.log("View sale details:", saleId)
   }
 
   window.editSale = (saleId) => {
     // Implement edit sale functionality
+    console.log("Edit sale:", saleId)
   }
 
   // Mock API functions - replace with actual API calls

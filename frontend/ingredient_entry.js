@@ -62,6 +62,8 @@ function submitIngredients() {
         return;
     }
 
+    console.log(data);
+
     fetch("http://127.0.0.1:8080/api/vendors/updateingredientlist", {
         method: "PUT",
         headers: {
@@ -72,6 +74,7 @@ function submitIngredients() {
     })
         .then(res => res.json())
         .then(result => {
+            console.log(result);
             document.getElementById("ingredientForm").classList.add("hidden");
             document.getElementById("successMessage").classList.remove("hidden");
             window.location.href = 'vendor_entry.html';

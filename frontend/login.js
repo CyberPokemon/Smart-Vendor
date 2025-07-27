@@ -103,7 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   const showMessage = (message, type = "error") => {
-    // Message display handled by UI
+    console.log(`${type}: ${message}`)
   }
 
   // Check if already authenticated
