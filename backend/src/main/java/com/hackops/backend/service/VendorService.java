@@ -138,7 +138,7 @@ public class VendorService {
 
         return ingredientUsageLogRepository.findByUserAndDate(user, date)
                 .stream()
-                .map(log -> new IngredientUsageResponseDTO(log.getIngredientName(), log.getQuantityBought(), log.getQuantityUsed(), log.getDate().toString()))
+                .map(log -> new IngredientUsageResponseDTO(log.getIngredientName(), log.getQuantityBought(), log.getQuantityUsed(), log.getDate().toString(),log.getPrice()))
                 .collect(Collectors.toList());
     }
 
@@ -148,7 +148,7 @@ public class VendorService {
 
         return ingredientUsageLogRepository.findByUserAndMonthYear(user, month, year)
                 .stream()
-                .map(log -> new IngredientUsageResponseDTO(log.getIngredientName(), log.getQuantityBought(), log.getQuantityUsed(), log.getDate().toString()))
+                .map(log -> new IngredientUsageResponseDTO(log.getIngredientName(), log.getQuantityBought(), log.getQuantityUsed(), log.getDate().toString(), log.getPrice()))
                 .collect(Collectors.toList());
     }
 
@@ -158,7 +158,7 @@ public class VendorService {
 
         return ingredientUsageLogRepository.findByUserAndDateBetween(user, start, end)
                 .stream()
-                .map(log -> new IngredientUsageResponseDTO(log.getIngredientName(), log.getQuantityBought(), log.getQuantityUsed(), log.getDate().toString()))
+                .map(log -> new IngredientUsageResponseDTO(log.getIngredientName(), log.getQuantityBought(), log.getQuantityUsed(), log.getDate().toString(), log.getPrice()))
                 .collect(Collectors.toList());
     }
 

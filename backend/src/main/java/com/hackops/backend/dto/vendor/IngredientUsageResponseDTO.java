@@ -5,15 +5,26 @@ public class IngredientUsageResponseDTO {
     private double quantityBought;
     private double quantityUsed;
     private String date;
+    private double price;
 
-    public IngredientUsageResponseDTO(String ingredientName, double quantityBought, double quantityUsed, String date) {
+    public IngredientUsageResponseDTO(String ingredientName, double quantityBought, double quantityUsed, String date, double price) {
         this.ingredientName = ingredientName;
         this.quantityBought = quantityBought;
         this.quantityUsed = quantityUsed;
         this.date = date;
+        this.price=price;
     }
 
     public IngredientUsageResponseDTO() {
+    }
+
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     public String getIngredientName() {
