@@ -11,7 +11,7 @@ async function loadMenuItems() {
   if (!token || !container) return;
 
   try {
-    const response = await fetch("http://127.0.0.1:8080/api/vendors/getmenu", {
+    const response = await fetch(`${API_BASE_URL}/api/vendors/getmenu`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -80,7 +80,7 @@ async function populateVendorInfo() {
   if (!token) return
 
   try {
-    const response = await fetch("http://127.0.0.1:8080/api/vendors/getuserdetails", {
+    const response = await fetch(`${API_BASE_URL}/api/vendors/getuserdetails`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
