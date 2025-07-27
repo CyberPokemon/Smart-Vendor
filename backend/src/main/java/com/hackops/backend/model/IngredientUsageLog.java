@@ -28,6 +28,8 @@ public class IngredientUsageLog {
     @Column(nullable = false)
     private LocalDate date;
 
+    private String messageFromVendor;
+
     public IngredientUsageLog(Long id, Users user, String ingredientName, double quantityBought, double quantityUsed, double price, LocalDate date) {
         this.id = id;
         this.user = user;
@@ -104,5 +106,13 @@ public class IngredientUsageLog {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public String getMessageFromVendor() {
+        return messageFromVendor;
+    }
+
+    public void setMessageFromVendor(String messageFromVendor) {
+        this.messageFromVendor = messageFromVendor;
     }
 }
