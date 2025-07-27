@@ -1,11 +1,351 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Smart Vendor</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Enhanced About Page Styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
 
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+        /* Hero Section */
+        .hero-section {
+            background: var(--gradient-primary);
+            position: relative;
+            padding: 6rem 2rem 4rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='7' cy='7' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 4rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            letter-spacing: -1px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        /* Enhanced Navigation */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Content Layout */
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem 4rem;
+        }
+
+        .section-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        /* Enhanced Cards */
+        .feature-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-xl);
+            padding: 2.5rem;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .card-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .card-description {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+
+        /* Team Section */
+        .team-section {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-xl);
+            padding: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .team-member {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .team-member::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .team-member:hover::before {
+            left: 100%;
+        }
+
+        .team-member:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .member-avatar {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
+            color: white;
+            font-weight: bold;
+        }
+
+        .member-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .member-role {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .member-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .member-link:hover {
+            color: var(--primary-hover);
+            text-decoration: underline;
+        }
+
+        /* GitHub Section */
+        .github-section {
+            background: linear-gradient(135deg, #24292e 0%, #1a1e22 100%);
+            color: white;
+            border-radius: var(--radius-xl);
+            padding: 3rem;
+            text-align: center;
+        }
+
+        .github-button {
+            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+            color: #24292e;
+            padding: 1rem 2rem;
+            border-radius: var(--radius-lg);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            border: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .github-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            color: #24292e;
+        }
+
+        /* Features List */
+        .features-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .features-list li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        .features-list li::before {
+            content: '✨';
+            margin-right: 1rem;
+            font-size: 1.2rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .section-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .about-container {
+                padding: 0 1rem 4rem;
+            }
+        }
+
+        /* Animation Classes */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Dark Theme Support */
+        [data-theme="dark"] .hero-section {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        }
+
+        [data-theme="dark"] .navbar {
+            background: rgba(15, 23, 42, 0.95);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        [data-theme="dark"] .team-section {
+            background: var(--bg-secondary);
+        }
+
+        [data-theme="dark"] .github-section {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        }
+    </style>
 </head>
 <body>
-  <nav class="navbar">
+  <!-- Enhanced Navigation -->
+  <nav class="navbar" id="navbar">
     <div class="nav-container">
       <div class="nav-left">
         <a href="index.html" class="btn btn-outline">
@@ -13,85 +353,122 @@
           Back to Homepage
         </a>
       </div>
-      <div class="nav-right">
-        <button class="btn btn-primary">Logout</button>
-      </div>
     </div>
   </nav>
 
-  <div class="dashboard-container">
-    <!-- Header -->
-    <div class="card" style="text-align: center;">
-      <div class="card-header">
-        <h1 class="logo-text" style="font-size: 3.5rem; letter-spacing: 1px;">
-          <i class="fas fa-city"></i>
-          Street Source
-        </h1>
-      </div>
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <h1 class="hero-title fade-in-up">
+        <i class="fas fa-city"></i>
+        Smart Vendor
+      </h1>
+      <p class="hero-subtitle fade-in-up">
+        Empowering street vendors with intelligent solutions for modern business management
+      </p>
     </div>
+  </section>
 
-    <!-- About and What We Have Made Side-by-Side -->
-    <div class="features-grid">
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title" >About Street Source</h3>
+  <!-- Main Content -->
+  <div class="about-container">
+    <!-- About and Features Section -->
+    <div class="section-grid">
+      <div class="feature-card fade-in-up">
+        <div class="card-icon">
+          <i class="fas fa-lightbulb"></i>
         </div>
-        <div class="card-content">
-          <p style="line-height: 1.7;">Street Source is an all-in-one intelligent vendor dashboard designed to streamline sales tracking, raw material monitoring, and AI-driven demand predictions. Our mission is to help vendors simplify their day-to-day tasks and improve decision-making.</p>
-        </div>
+        <h3 class="card-title">About Smart Vendor</h3>
+        <p class="card-description">
+          Smart Vendor is a revolutionary platform designed to transform how street vendors manage their businesses. 
+          Our intelligent dashboard streamlines operations, provides valuable insights, and helps vendors make data-driven 
+          decisions to grow their business efficiently.
+        </p>
       </div>
 
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title" style="font-family: 'Poppins', sans-serif;">What We Have Made</h3>
+      <div class="feature-card fade-in-up">
+        <div class="card-icon">
+          <i class="fas fa-rocket"></i>
         </div>
-        <div class="card-content">
-          <ul>
-            <li>Enter daily sales with item-wise details</li>
-            <li>Track raw materials and suggestions for restocking</li>
-            <li>Use AI-based predictions to forecast future demand</li>
-            <li>View past transactions and zone-wise summaries</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    
-      
-
-    <!-- Our Team -->
-    <div class="card">
-      <div class="card-header">
-        <h3 class="card-title">Our Team</h3>
-      </div>
-      <div class="card-content">
-        <p><strong>Team Name:</strong> HACKOPSGIT</p>
-        <p><strong>Participants:</strong></p>
-        <ul>
-          <li><a href="http://www.linkedin.com/in/imon-mallik-2821a8358" target="_blank">Imon Mallick</a></li>
-          <li><a href="https://www.linkedin.com/in/arghadeep-tambuli-92b759364">Arghadeep Tamboli</a></li>
-          <li><a href="https://www.linkedin.com/in/abhilasha-shee-686619368" target="_blank">Abhilasha Shee</a></li>
-          <li><a href="https://www.linkedin.com/in/soumi-sahu-a1733028b" target="_blank">Soumi Sahu</a></li>
-          <li><a href="https://www.linkedin.com/in/tritiya-bhattacharya-a19ba6286" target="_blank">Tritiya Bhattacharya</a></li>
+        <h3 class="card-title">What We've Built</h3>
+        <ul class="features-list">
+          <li>Comprehensive daily sales tracking with detailed analytics</li>
+          <li>Smart raw material monitoring and restock alerts</li>
+          <li>AI-powered demand forecasting and trend analysis</li>
+          <li>Historical transaction views and zone-wise reporting</li>
+          <li>Intuitive dashboard with real-time insights</li>
         </ul>
       </div>
     </div>
 
-    <!-- Source Code -->
-    <div class="card">
-      <div class="card-header">
-        <h3 class="card-title">Source Code</h3>
+    <!-- Team Section -->
+    <section class="team-section fade-in-up">
+      <h2 class="card-title" style="text-align: center; margin-bottom: 1rem;">Meet Team HACKOPS</h2>
+      <p style="text-align: center; color: var(--text-secondary); margin-bottom: 2rem;">
+        A passionate group of developers committed to revolutionizing vendor management
+      </p>
+      
+      <div class="team-grid">
+        <div class="team-member">
+          <div class="member-avatar">IM</div>
+          <h4 class="member-name">Imon Mallik</h4>
+          <p class="member-role">Full Stack Developer</p>
+          <a href="http://www.linkedin.com/in/imon-mallik-2821a8358" target="_blank" class="member-link">
+            <i class="fab fa-linkedin"></i> Connect on LinkedIn
+          </a>
+        </div>
+
+        <div class="team-member">
+          <div class="member-avatar">AT</div>
+          <h4 class="member-name">Arghadeep Tambuli</h4>
+          <p class="member-role">Backend Developer</p>
+          <a href="https://www.linkedin.com/in/arghadeep-tambuli-92b759364" target="_blank" class="member-link">
+            <i class="fab fa-linkedin"></i> Connect on LinkedIn
+          </a>
+        </div>
+
+        <div class="team-member">
+          <div class="member-avatar">AS</div>
+          <h4 class="member-name">Abhilasha Shee</h4>
+          <p class="member-role">Frontend Developer</p>
+          <a href="https://www.linkedin.com/in/abhilasha-shee-686619368" target="_blank" class="member-link">
+            <i class="fab fa-linkedin"></i> Connect on LinkedIn
+          </a>
+        </div>
+
+        <div class="team-member">
+          <div class="member-avatar">SS</div>
+          <h4 class="member-name">Soumi Sahu</h4>
+          <p class="member-role">UI/UX Designer</p>
+          <a href="https://www.linkedin.com/in/soumi-sahu-a1733028b" target="_blank" class="member-link">
+            <i class="fab fa-linkedin"></i> Connect on LinkedIn
+          </a>
+        </div>
+
+        <div class="team-member">
+          <div class="member-avatar">TB</div>
+          <h4 class="member-name">Tritiya Bhattacharya</h4>
+          <p class="member-role">Data Analyst</p>
+          <a href="https://www.linkedin.com/in/tritiya-bhattacharya-a19ba6286" target="_blank" class="member-link">
+            <i class="fab fa-linkedin"></i> Connect on LinkedIn
+          </a>
+        </div>
       </div>
-      <div class="card-content">
-        <p>Explore our full source code and contributions on GitHub:</p>
-        <a href="" target="_blank" class="btn btn-primary">
-          <i class="fab fa-github"></i>
-          View GitHub Repository
-        </a>
-      </div>
-    </div>
+    </section>
+
+    <!-- GitHub Section -->
+    <section class="github-section fade-in-up">
+      <h3 class="card-title" style="color: white; margin-bottom: 1rem;">Open Source & Collaboration</h3>
+      <p style="color: rgba(255,255,255,0.9); margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+        Our project is open source and available for the community. Explore our code, contribute, or learn from our implementation.
+      </p>
+      <a href="https://github.com/CyberPokemon/Smart-Vendor.git" target="_blank" class="github-button">
+        <i class="fab fa-github"></i>
+        View on GitHub
+      </a>
+    </section>
   </div>
 
+  <script src="config.js"></script>
   <script src="about.js"></script>
 </body>
 </html>
