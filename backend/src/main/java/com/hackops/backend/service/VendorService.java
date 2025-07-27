@@ -293,5 +293,32 @@ public class VendorService {
                 .collect(Collectors.toList());
     }
 
+    public List<String> getVendorMessages(Users user, LocalDate start, LocalDate end) {
+        return ingredientUsageLogRepository.findByUserAndDateBetween(user, start, end)
+                .stream()
+                .map(IngredientUsageLog::getMessageFromVendor)
+                .filter(msg -> msg != null && !msg.trim().isEmpty())
+                .distinct()
+                .limit(10) // limit to recent unique 10 comments to avoid clutter
+                .collect(Collectors.toList());
+    }
+
+    public Map<String, List<String>> getFoodToIngredientsMap(Users user) {
+        List<MenuItem> menuItems = menuItemRepository.findByUser(user); // or fetch from repository if not eagerly loaded
+
+        Map<String, List<String>> foodToIngredients = new HashMap<>();
+
+        for (MenuItem item : menuItems) {
+            List<String> ingredients = item.getIngredientNames().stream()
+                    .map(Ingredient::getName)
+                    .collect(Collectors.toList());
+            foodToIngredients.put(item.getFoodName(), ingredients);
+        }
+
+        return foodToIngredients;
+    }
+
+
+
 
 }
