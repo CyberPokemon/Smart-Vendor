@@ -190,7 +190,6 @@ async function fetchAvailableIngredients() {
     }
 
     availableIngredients = await response.json();
-    console.log("Available Ingredients:", availableIngredients);
   } catch (err) {
     console.error("Error fetching ingredients:", err);
     alert("Could not load available ingredients.");
@@ -356,7 +355,6 @@ function submitAllData() {
 //   confirmBtn.textContent = "Confirm & Submit";
 //   confirmBtn.onclick = () => {
 //     // You can add a real submission API here
-//     console.log("Submitted:", data);
 //     window.location.href = "submission_success.html";
 //   };
 
