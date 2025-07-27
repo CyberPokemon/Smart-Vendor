@@ -128,6 +128,37 @@ python -m http.server 5500
 
 ---
 
+## 👥 Team HackOps Members
+
+<p align="center">
+  <img src="https://img.icons8.com/color/48/000000/group.png" width="60"/>
+</p>
+
+<table align="center">
+  <tr>
+    <td align="center">
+      <img src="https://img.shields.io/badge/👨‍💻-Arghadeep%20Tambuli-blue?style=for-the-badge" alt="Arghadeep Tambuli"/>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="https://img.shields.io/badge/👨‍💻-Imon%20Mallik-green?style=for-the-badge" alt="Imon Mallik"/>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="https://img.shields.io/badge/👩‍💻-Soumi%20Sahu-purple?style=for-the-badge" alt="Soumi Sahu"/>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="https://img.shields.io/badge/👩‍💻-Abhilasha%20Shee-orange?style=for-the-badge" alt="Abhilasha Shee"/>
+    </td>
+  </tr>
+</table>
+
+---
+
 ## 🤝 Contributing
 
 1. Fork the repo

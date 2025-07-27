@@ -5,12 +5,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - StreetSource</title>
+    <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="sliding-auth.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
 <body>
     <div class="sliding-container" id="container">
+        <!-- Theme Toggle -->
+        <button id="themeToggle" class="theme-toggle login-theme-toggle" aria-label="Toggle dark mode">
+            <i class="fas fa-moon"></i>
+        </button>
+
         <!-- Sign Up Container (Registration Options) -->
         <div class="form-container sign-up-container">
             <form class="auth-form">
@@ -24,18 +30,6 @@
                 <p>Choose how you'd like to register</p>
 
                 <div class="register-options">
-                    <button type="button" class="social-btn google" onclick="socialLogin('google')">
-                        <i class="fab fa-google"></i>
-                        Continue with Google
-                    </button>
-
-                    <button type="button" class="social-btn facebook" onclick="socialLogin('facebook')">
-                        <i class="fab fa-facebook-f"></i>
-                        Continue with Facebook
-                    </button>
-
-                    <div class="divider">OR</div>
-
                     <button type="button" onclick="goToRegister()">
                         <i class="fas fa-user-plus"></i>
                         Continue with Email
@@ -179,6 +173,7 @@
             }
         });
     </script>
+    <script src="animations.js"></script>
 </body>
 
 </html>

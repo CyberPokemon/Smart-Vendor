@@ -21,7 +21,31 @@
                 </div>
             </div>
             <div class="nav-right">
-                <a href="about.html" class="nav-link">About</a>
+                <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <div class="nav-item-with-dropdown">
+                    <a href="#about" class="nav-link">About</a>
+                    <div class="nav-dropdown">
+                        <div class="dropdown-content">
+                            <div class="dropdown-section">
+                                <i class="fas fa-rocket"></i>
+                                <h4>Mission</h4>
+                                <p>Empowering street vendors with AI-driven insights</p>
+                            </div>
+                            <div class="dropdown-section">
+                                <i class="fas fa-users"></i>
+                                <h4>Community</h4>
+                                <p>Join thousands of successful vendors</p>
+                            </div>
+                            <div class="dropdown-section">
+                                <i class="fas fa-chart-line"></i>
+                                <h4>Growth</h4>
+                                <p>Increase efficiency by up to 40%</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div id="authButtons" class="auth-buttons">
                     <a href="login.html" class="btn btn-outline btn-sm">Login</a>
                     <a href="register.html" class="btn btn-primary btn-sm">Sign Up</a>
@@ -57,7 +81,7 @@
                     <button id="startTrackingBtn" class="btn btn-primary" type="button">
                         Start Tracking Sales
                         <i class="fas fa-arrow-right"></i>
-                    </a>
+                    </button>
                     <a href="login.html" class="btn btn-secondary">
                         Register as Vendor
                     </a>
@@ -124,6 +148,20 @@
         </div>
     </section>
 
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-brand">StreetSource &copy; 2025</div>
+        <div class="footer-social">
+          <a href="https://github.com/CyberPokemon/Smart-Vendor" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+          <a href="https://twitter.com/" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="https://linkedin.com/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+          <a href="mailto:contact@streetsource.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+        </div>
+      </div>
+    </footer>
+
     <script src="script.js"></script>
+    <script src="animations.js"></script>
 </body>
 </html>
