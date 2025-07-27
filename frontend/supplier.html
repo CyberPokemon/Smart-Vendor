@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Supplier Dashboard - StreetSource</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="main-header">
+    <div class="header-left">
+      <img src="logo.png" alt="StreetSource" class="logo">
+      <button onclick="location.href='index.html'" class="back-btn">← Back to Home</button>
+    </div>
+    <div class="page-label">
+      Supplier Dashboard
+    </div>
+  </header>
+
+  <!-- Welcome Message -->
+  <section class="welcome-section">
+    <h2>Welcome back, <span class="highlight">Fresh Vegetables Co.</span>!</h2>
+    <p>Manage your inventory and fulfill orders from street food vendors</p>
+  </section>
+
+  <!-- Stats -->
+  <section class="stats-section">
+    <div class="stat-card">Total Products <span>24</span></div>
+    <div class="stat-card">Pending Orders <span>8</span></div>
+    <div class="stat-card">This Month <span>₹15,200</span></div>
+    <div class="stat-card">Rating <span>4.8 ★</span></div>
+  </section>
+
+  <!-- Add New Material Form -->
+  <section class="form-section">
+    <h3>Add New Material</h3>
+    <p class="section-sub">Add new products to your inventory</p>
+    <form class="add-form">
+      <input type="text" placeholder="Item Name e.g., Fresh Tomatoes" required />
+      <input type="number" placeholder="Price (per unit) e.g., 30" required />
+      <select required>
+        <option disabled selected>Select category</option>
+        <option>Vegetables</option>
+        <option>Fruits</option>
+        <option>Spices</option>
+        <option>Packaging</option>
+      </select>
+      <textarea placeholder="Brief description of the item" rows="3"></textarea>
+      <select required>
+        <option disabled selected>Select delivery option</option>
+        <option>Same Day</option>
+        <option>Next Day</option>
+        <option>Pickup Only</option>
+      </select>
+      <div class="form-actions">
+        <button type="submit">Add Item</button>
+        <button type="button">Upload Image</button>
+      </div>
+    </form>
+  </section>
+
+  <!-- Inventory Section -->
+  <section class="inventory-section">
+    <h3>Current Inventory</h3>
+    <p class="section-sub">Manage your product listings and stock status</p>
+    <!-- Placeholder for future product table -->
+    <div class="placeholder-box">[ Inventory table will go here ]</div>
+  </section>
+
+  <!-- Incoming Orders -->
+  <section class="orders-section">
+    <h3>Incoming Orders</h3>
+    <p class="section-sub">Manage orders from vendors</p>
+    <table class="orders-table">
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>Vendor</th>
+          <th>Items</th>
+          <th>Amount</th>
+          <th>Date</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>#1023</td>
+          <td>Vendor A</td>
+          <td>Tomatoes x10</td>
+          <td>₹300</td>
+          <td>2025-07-25</td>
+          <td>Pending</td>
+          <td><button>Mark Done</button></td>
+        </tr>
+        <tr>
+          <td>#1024</td>
+          <td>Vendor B</td>
+          <td>Onions x5</td>
+          <td>₹150</td>
+          <td>2025-07-26</td>
+          <td>Dispatched</td>
+          <td><button disabled>✓</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+</body>
+</html>

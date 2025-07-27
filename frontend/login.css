@@ -1,0 +1,87 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+body {
+  height: 100vh;
+  background-image: url('https://images.unsplash.com/photo-1525059337994-6f2a1311b4d4'); /* Replace with your own street food image */
+  background-size: cover;
+  background-position: center;
+  transition: background 0.8s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-container {
+  backdrop-filter: blur(6px);
+  background: rgba(255, 255, 255, 0.15);
+  padding: 50px;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  transition: all 0.4s ease-in-out;
+}
+
+.login-box {
+  background-color: rgba(255, 255, 255, 0.85);
+  padding: 30px;
+  border-radius: 12px;
+  width: 300px;
+  text-align: center;
+  transition: transform 0.4s ease-in-out;
+}
+
+.login-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.25);
+}
+
+h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+form input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  transition: border 0.3s ease;
+}
+
+form input:focus {
+  border-color: #e63946;
+  outline: none;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background-color: #e63946;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  margin-top: 10px;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #d62828;
+}
+
+.register-text {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #444;
+}
+
+.register-text a {
+  color: #e63946;
+  text-decoration: none;
+  font-weight: bold;
+}
