@@ -34,7 +34,6 @@ import java.util.stream.Collectors;
 @Service
 public class VendorService {
 
-
     @Autowired
     private UserRepository userRepository;
 
@@ -53,9 +52,9 @@ public class VendorService {
     public void registerIngridients(List<RequestIngridientsDTO> requestIngridientsDTO, String username) {
         Users user = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found"));
 
-        for (RequestIngridientsDTO l : requestIngridientsDTO)
-        {
-            VendorIngridientList vendorIngridientList = new VendorIngridientList(user, l.getIngridiends(), l.getQuantity(), l.getAvgprice(), l.getUnit());
+        for (RequestIngridientsDTO l : requestIngridientsDTO) {
+            VendorIngridientList vendorIngridientList = new VendorIngridientList(user, l.getIngridiends(),
+                    l.getQuantity(), l.getAvgprice(), l.getUnit());
             vendorRepository.save(vendorIngridientList);
         }
     }
@@ -83,7 +82,8 @@ public class VendorService {
                 existing.setUnit(dto.getUnit());
                 vendorRepository.save(existing);
             } else {
-                VendorIngridientList newIngredient = new VendorIngridientList(user, dto.getIngridiends(), dto.getQuantity(), dto.getAvgprice(),dto.getUnit());
+                VendorIngridientList newIngredient = new VendorIngridientList(user, dto.getIngridiends(),
+                        dto.getQuantity(), dto.getAvgprice(), dto.getUnit());
                 vendorRepository.save(newIngredient);
             }
         }
@@ -117,8 +117,6 @@ public class VendorService {
                 .collect(Collectors.toList());
     }
 
-
-
     public void saveDailyUsage(String username, List<IngredientUsageRequestDTO> entries, String messageFromVendors) {
         Users user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -146,14 +144,14 @@ public class VendorService {
         }
     }
 
-
     public List<IngredientUsageResponseDTO> getUsageByDate(String username, LocalDate date) {
         Users user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         return ingredientUsageLogRepository.findByUserAndDate(user, date)
                 .stream()
-                .map(log -> new IngredientUsageResponseDTO(log.getIngredientName(), log.getQuantityBought(), log.getQuantityUsed(), log.getDate().toString()))
+                .map(log -> new IngredientUsageResponseDTO(log.getIngredientName(), log.getQuantityBought(),
+                        log.getQuantityUsed(), log.getDate().toString()))
                 .collect(Collectors.toList());
     }
 
@@ -163,7 +161,8 @@ public class VendorService {
 
         return ingredientUsageLogRepository.findByUserAndMonthYear(user, month, year)
                 .stream()
-                .map(log -> new IngredientUsageResponseDTO(log.getIngredientName(), log.getQuantityBought(), log.getQuantityUsed(), log.getDate().toString()))
+                .map(log -> new IngredientUsageResponseDTO(log.getIngredientName(), log.getQuantityBought(),
+                        log.getQuantityUsed(), log.getDate().toString()))
                 .collect(Collectors.toList());
     }
 
@@ -173,7 +172,8 @@ public class VendorService {
 
         return ingredientUsageLogRepository.findByUserAndDateBetween(user, start, end)
                 .stream()
-                .map(log -> new IngredientUsageResponseDTO(log.getIngredientName(), log.getQuantityBought(), log.getQuantityUsed(), log.getDate().toString()))
+                .map(log -> new IngredientUsageResponseDTO(log.getIngredientName(), log.getQuantityBought(),
+                        log.getQuantityUsed(), log.getDate().toString()))
                 .collect(Collectors.toList());
     }
 
@@ -275,12 +275,4 @@ public class VendorService {
         return foodToIngredients;
     }
 
-
-    public UserDetailsResponseDto getUserDetails(String username) {
-        Users user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        return new UserDetailsResponseDto(user.getUsername(),user.getName(), user.getEmailAddress(), user.getAddresss(),user.getBusinessname());
-
-    }
 }
