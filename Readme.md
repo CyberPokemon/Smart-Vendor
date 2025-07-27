@@ -51,13 +51,13 @@ Smart-Vendor/
 
 ## 🌐 Live Demo
 
-**🚀 Website Deployed on Render:** [Smart Vendor Live](https://smart-vendor.onrender.com)
+**🚀 Website Deployed on Render:** [Smart Vendor Live](https://smart-vendor-virid.vercel.app/)
 
 > ⚠️ **Important Note:** The backend server is hosted on Render's free tier and may take **2-3 minutes** to start up if it has been inactive. Please be patient during the initial load time.
 
 **Demo Credentials:**
-- Username: `demo`
-- Password: `demo123`
+- Username: `rajudas`
+- Password: `1234567890`
 
 ---
 <!-- 
