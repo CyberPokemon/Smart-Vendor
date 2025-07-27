@@ -186,3 +186,18 @@ window.formatTime = formatTime
 window.generateId = generateId
 window.debounce = debounce
 window.throttle = throttle
+
+document.addEventListener("DOMContentLoaded", () => {
+  const startTrackingBtn = document.getElementById("startTrackingBtn")
+  if (startTrackingBtn) {
+    startTrackingBtn.addEventListener("click", () => {
+      // Check for token (support both old and new key names)
+      const token = localStorage.getItem("streetsource_token") || localStorage.getItem("jwtToken")
+      if (token) {
+        window.location.href = "vendor-dashboard.html"
+      } else {
+        window.location.href = "login.html"
+      }
+    })
+  }
+})
