@@ -7,6 +7,10 @@ function initializeApp() {
   // Check authentication status
   checkAuthStatus()
 
+  const logoutBtn = document.getElementById("logoutBtn")
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", logout)
+  }
   // Initialize testimonial carousel if on home page
   if (document.querySelector(".testimonials")) {
     initializeTestimonials()
@@ -18,10 +22,11 @@ function initializeApp() {
 
 function checkAuthStatus() {
   const user = getCurrentUser()
+  const token = localStorage.getItem("jwtToken")
   const authButtons = document.getElementById("authButtons")
   const userMenu = document.getElementById("userMenu")
 
-  if (user && authButtons && userMenu) {
+  if (user && token && authButtons && userMenu) {
     // User is logged in
     authButtons.style.display = "none"
     userMenu.style.display = "flex"
@@ -50,7 +55,7 @@ function getCurrentUser() {
 function logout() {
   // Clear user data
   localStorage.removeItem("user")
-  localStorage.removeItem("token")
+  localStorage.removeItem("jwtToken")
   localStorage.removeItem("salesData")
   localStorage.removeItem("orders")
 
@@ -162,7 +167,7 @@ function throttle(func, limit) {
   let inThrottle
   return function () {
     const args = arguments
-    
+
     if (!inThrottle) {
       func.apply(this, args)
       inThrottle = true
