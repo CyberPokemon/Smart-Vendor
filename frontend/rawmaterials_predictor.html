@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<<<<<<< HEAD
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,6 +8,17 @@
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
+=======
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Raw Materials Predictor - Smart Vendor</title>
+  <link rel="stylesheet" href="rawmaterials_predictor.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+>>>>>>> 2769ba5186fdcab0b4d72d65af366f2429992ebf
 <body>
   <nav class="navbar">
     <div class="nav-container">
@@ -20,7 +32,11 @@
           <div class="logo-icon">
             <i class="fas fa-drumstick-bite"></i>
           </div>
+<<<<<<< HEAD
           <span class="logo-text">StreetSource</span>
+=======
+          <span class="logo-text">Smart Vendor</span>
+>>>>>>> 2769ba5186fdcab0b4d72d65af366f2429992ebf
         </div>
       </div>
       <div class="nav-right">
@@ -30,17 +46,68 @@
   </nav>
 
   <div class="dashboard-container">
+<<<<<<< HEAD
     <!-- Entry Form -->
     <div class="card">
       <div class="card-header">
         <h3 class="card-title">
           <i class="fas fa-edit"></i>
           Daily Raw Material Entry
+=======
+    <!-- Daily Entry Section -->
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">
+          <i class="fas fa-list-alt"></i> Daily Raw Material Entry
+        </h3>
+      </div>
+      <div class="card-content">
+        <div class="form-group">
+          <label for="entryDate">Select Date</label>
+          <input type="date" id="entryDate" class="form-input" />
+        </div>
+
+        <div class="table-container" style="margin-top: 1rem;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Ingredient</th>
+                <th>Quantity Bought (kg)</th>
+                <th>Quantity Used (kg)</th>
+                <th>Price per Kg (₹)</th>
+              </tr>
+            </thead>
+            <tbody id="ingredientTableBody"></tbody>
+          </table>
+        </div>
+
+        <div class="form-group" style="margin-top: 1rem;">
+          <label for="vendorMessage">Message / Notes (optional)</label>
+          <textarea id="vendorMessage" class="form-input" rows="3"
+            placeholder="e.g., Sales increased due to local festival"></textarea>
+        </div>
+
+        <div class="form-actions">
+          <button id="submitAllBtn" class="btn btn-primary">
+            <i class="fas fa-paper-plane"></i> Submit All
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filter Section -->
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">
+          <i class="fas fa-filter"></i>
+          Filter Usage History
+>>>>>>> 2769ba5186fdcab0b4d72d65af366f2429992ebf
         </h3>
       </div>
       <div class="card-content">
         <div class="form-grid">
           <div class="form-group">
+<<<<<<< HEAD
             <label for="entryDate">Date</label>
             <input type="date" id="entryDate" class="form-input" />
           </div>
@@ -65,11 +132,47 @@
           <button id="addEntry" class="btn btn-primary">
             <i class="fas fa-plus"></i>
             Add Entry
+=======
+            <label for="filterType">Filter By</label>
+            <select id="filterType" class="form-input">
+              <option value="">-- Select --</option>
+              <option value="date">Date</option>
+              <option value="month">Month</option>
+              <option value="range">Date Range</option>
+            </select>
+          </div>
+
+          <div class="form-group filter-input" id="filter-date" style="display: none;">
+            <label for="filterDate">Select Date</label>
+            <input type="date" id="filterDate" class="form-input" />
+          </div>
+
+          <div class="form-group filter-input" id="filter-month" style="display: none;">
+            <label for="filterMonth">Select Month</label>
+            <input type="month" id="filterMonth" class="form-input" />
+          </div>
+
+          <div class="form-group filter-input" id="filter-range" style="display: none;">
+            <label for="startDate">Start Date</label>
+            <input type="date" id="startDate" class="form-input" />
+            <label for="endDate">End Date</label>
+            <input type="date" id="endDate" class="form-input" />
+          </div>
+        </div>
+        <div class="form-actions" style="margin-top: 1rem;">
+          <button id="filterBtn" class="btn btn-secondary">
+            <i class="fas fa-search"></i>
+            Apply Filter
+>>>>>>> 2769ba5186fdcab0b4d72d65af366f2429992ebf
           </button>
         </div>
       </div>
     </div>
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2769ba5186fdcab0b4d72d65af366f2429992ebf
     <!-- History Table -->
     <div class="card">
       <div class="card-header">
@@ -112,6 +215,15 @@
     </div>
   </div>
 
+<<<<<<< HEAD
   <script src="prediction-dashboard.js"></script>
 </body>
 </html>
+=======
+  <script src="config.js"></script>
+
+  <script src="rawmaterials_predictor.js"></script>
+</body>
+
+</html>
+>>>>>>> 2769ba5186fdcab0b4d72d65af366f2429992ebf

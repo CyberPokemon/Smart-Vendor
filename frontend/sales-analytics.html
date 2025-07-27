@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Analytics - StreetSource</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="index.html" class="back-link">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Back to Home</span>
+                </a>
+                <div class="nav-divider"></div>
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <span class="logo-text">StreetSource</span>
+                </div>
+            </div>
+            <div class="nav-right">
+                <div class="badge badge-success">Sales Analytics</div>
+                <div id="userMenu" class="user-menu">
+                    <span id="userName">User</span>
+                    <button id="logoutBtn" class="btn btn-outline btn-sm">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <!-- Analytics Overview -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">
+                    <i class="fas fa-chart-line"></i>
+                    Sales Analytics Dashboard
+                </h2>
+                <p class="card-description">
+                    Track your sales performance and identify trends
+                </p>
+            </div>
+        </div>
+
+        <!-- Key Metrics -->
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-icon">
+                    <i class="fas fa-rupee-sign"></i>
+                </div>
+                <div class="metric-content">
+                    <h3 id="totalRevenue">₹0</h3>
+                    <p>Total Revenue</p>
+                    <span class="metric-change positive" id="revenueChange">+0%</span>
+                </div>
+            </div>
+            
+            <div class="metric-card">
+                <div class="metric-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                </div>
+                <div class="metric-content">
+                    <h3 id="totalOrders">0</h3>
+                    <p>Total Orders</p>
+                    <span class="metric-change positive" id="ordersChange">+0%</span>
+                </div>
+            </div>
+            
+            <div class="metric-card">
+                <div class="metric-icon">
+                    <i class="fas fa-chart-bar"></i>
+                </div>
+                <div class="metric-content">
+                    <h3 id="avgOrderValue">₹0</h3>
+                    <p>Avg Order Value</p>
+                    <span class="metric-change positive" id="aovChange">+0%</span>
+                </div>
+            </div>
+            
+            <div class="metric-card">
+                <div class="metric-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="metric-content">
+                    <h3 id="totalCustomers">0</h3>
+                    <p>Total Customers</p>
+                    <span class="metric-change positive" id="customersChange">+0%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Date Range Selector -->
+        <div class="card">
+            <div class="card-content">
+                <div class="date-range-selector">
+                    <div class="date-inputs">
+                        <div class="input-group">
+                            <label for="startDate">From</label>
+                            <input type="date" id="startDate" class="form-input">
+                        </div>
+                        <div class="input-group">
+                            <label for="endDate">To</label>
+                            <input type="date" id="endDate" class="form-input">
+                        </div>
+                    </div>
+                    <div class="quick-filters">
+                        <button class="filter-btn active" data-period="7">Last 7 Days</button>
+                        <button class="filter-btn" data-period="30">Last 30 Days</button>
+                        <button class="filter-btn" data-period="90">Last 3 Months</button>
+                        <button class="filter-btn" data-period="365">Last Year</button>
+                    </div>
+                    <button id="applyFilter" class="btn btn-primary">Apply Filter</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sales Trends Chart -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-line-chart"></i>
+                    Sales Trends
+                </h3>
+            </div>
+            <div class="card-content">
+                <canvas id="salesTrendsChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Product Performance -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-star"></i>
+                    Top Performing Items
+                </h3>
+            </div>
+            <div class="card-content">
+                <div class="performance-grid">
+                    <div class="performance-chart">
+                        <canvas id="productPerformanceChart"></canvas>
+                    </div>
+                    <div class="performance-list">
+                        <div id="topProducts" class="top-products">
+                            <!-- Dynamic content will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Time-based Analysis -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-clock"></i>
+                    Peak Hours Analysis
+                </h3>
+            </div>
+            <div class="card-content">
+                <div class="time-analysis">
+                    <div class="hourly-chart">
+                        <canvas id="hourlyChart"></canvas>
+                    </div>
+                    <div class="peak-insights">
+                        <h4>Key Insights</h4>
+                        <div class="insight-list">
+                            <div class="insight-item">
+                                <i class="fas fa-sun"></i>
+                                <div>
+                                    <strong>Morning Peak:</strong>
+                                    <span id="morningPeak">8:00 AM - 10:00 AM</span>
+                                </div>
+                            </div>
+                            <div class="insight-item">
+                                <i class="fas fa-utensils"></i>
+                                <div>
+                                    <strong>Lunch Rush:</strong>
+                                    <span id="lunchPeak">12:00 PM - 2:00 PM</span>
+                                </div>
+                            </div>
+                            <div class="insight-item">
+                                <i class="fas fa-moon"></i>
+                                <div>
+                                    <strong>Evening Peak:</strong>
+                                    <span id="eveningPeak">6:00 PM - 8:00 PM</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Customer Insights -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-user-friends"></i>
+                    Customer Insights
+                </h3>
+            </div>
+            <div class="card-content">
+                <div class="customer-insights">
+                    <div class="customer-chart">
+                        <canvas id="customerChart"></canvas>
+                    </div>
+                    <div class="customer-stats">
+                        <div class="stat-item">
+                            <h4 id="newCustomers">0</h4>
+                            <p>New Customers</p>
+                        </div>
+                        <div class="stat-item">
+                            <h4 id="returningCustomers">0</h4>
+                            <p>Returning Customers</p>
+                        </div>
+                        <div class="stat-item">
+                            <h4 id="customerRetention">0%</h4>
+                            <p>Retention Rate</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Export Options -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-download"></i>
+                    Export Analytics
+                </h3>
+            </div>
+            <div class="card-content">
+                <div class="export-options">
+                    <button id="exportPDF" class="btn btn-outline">
+                        <i class="fas fa-file-pdf"></i>
+                        Export as PDF
+                    </button>
+                    <button id="exportExcel" class="btn btn-outline">
+                        <i class="fas fa-file-excel"></i>
+                        Export as Excel
+                    </button>
+                    <button id="exportCSV" class="btn btn-outline">
+                        <i class="fas fa-file-csv"></i>
+                        Export as CSV
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="config.js"></script>
+    <script src="sales-analytics.js"></script>
+</body>
+</html>

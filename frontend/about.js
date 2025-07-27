@@ -3,6 +3,7 @@
 
 // Example: Smooth scroll to cards (if needed)
 document.querySelectorAll("a[href^='#']").forEach(anchor => {
+<<<<<<< HEAD
   anchor.addEventListener("click", function (e) {
     e.preventDefault();
     document.querySelector(this.getAttribute("href")).scrollIntoView({
@@ -10,3 +11,12 @@ document.querySelectorAll("a[href^='#']").forEach(anchor => {
     });
   });
 });
+=======
+    anchor.addEventListener("click", function (e) {
+      e.preventDefault();
+      document.querySelector(this.getAttribute("href")).scrollIntoView({
+        behavior: "smooth"
+      });
+    });
+  });
+>>>>>>> 2769ba5186fdcab0b4d72d65af366f2429992ebf
