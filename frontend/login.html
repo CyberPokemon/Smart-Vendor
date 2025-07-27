@@ -56,7 +56,7 @@
                 <h1>Welcome Back</h1>
                 <p>Sign in to your account to continue</p>
 
-                <input type="email" id="email" placeholder="Email Address" required />
+                <input type="text" id="email" placeholder="username" required />
                 <input type="password" id="password" placeholder="Password" required />
 
                 <!-- <div class="form-options">
@@ -156,10 +156,10 @@
             }
 
             // Convert email to username for backend
-            const username = email.split('@')[0]; // or fetch username another way if required
+            // const username = email.split('@')[0]; // or fetch username another way if required
 
             const payload = {
-                username: username,
+                username: email,
                 password: password
             };
 
@@ -176,14 +176,18 @@
 
                 if (response.ok && result.jwtToken) {
                     alert(result.message + "\nWelcome, " + result.username);
+                    console.log("passed1")
 
                     // Optionally store JWT in localStorage or sessionStorage
-                    sessionStorage.setItem('jwtToken', result.jwtToken);
-                    sessionStorage.setItem('username', result.username);
-                    sessionStorage.setItem('role', result.role);
+                    localStorage.setItem('jwtToken', result.jwtToken);
+                    localStorage.setItem('user', JSON.stringify({
+                        username: result.username,
+                        role: result.role,
+                        firstName: result.username.split('@')[0] // or get from result if available
+                    }));
 
                     // Redirect to dashboard or homepage
-                    window.location.href = 'dashboard.html'; // Change as per your app
+                    window.location.href = 'rawmaterials_predictor.html'; // Change as per your app
                 } else {
                     alert(result.message || 'Login failed. Please try again.');
                 }
