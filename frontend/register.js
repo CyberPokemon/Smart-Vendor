@@ -27,6 +27,19 @@ document.addEventListener('DOMContentLoaded', () => {
       btnText.textContent = 'Creating...';
       registerBtn.disabled = true;
 
+      const p1= document.getElementById('password').value;
+      const p2= document.getElementById('confirmPassword').value;
+
+      if (p1 !== p2) {
+        alert("Passwords do not match");
+        btnLoader.style.display = 'none';
+        btnText.textContent = 'Create Account';
+        registerBtn.disabled = false;
+        return;
+      }
+      
+      
+
       const payload = {
           username: document.getElementById('Username').value.trim(),
           name: document.getElementById('name').value.trim(),
