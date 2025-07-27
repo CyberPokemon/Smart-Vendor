@@ -180,8 +180,11 @@
 
                     // Optionally store JWT in localStorage or sessionStorage
                     localStorage.setItem('jwtToken', result.jwtToken);
-                    localStorage.setItem('username', result.username);
-                    localStorage.setItem('role', result.role);
+                    localStorage.setItem('user', JSON.stringify({
+                        username: result.username,
+                        role: result.role,
+                        firstName: result.username.split('@')[0] // or get from result if available
+                    }));
 
                     // Redirect to dashboard or homepage
                     window.location.href = 'rawmaterials_predictor.html'; // Change as per your app
