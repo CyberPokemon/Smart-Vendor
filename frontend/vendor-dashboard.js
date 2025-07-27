@@ -1,7 +1,78 @@
 document.addEventListener("DOMContentLoaded", () => {
   populateVendorInfo()
   setupLogout()
+  loadMenuItems()
 })
+
+async function loadMenuItems() {
+  const token = localStorage.getItem("jwtToken");
+  const container = document.getElementById("menuItemsContainer");
+
+  if (!token || !container) return;
+
+  try {
+    const response = await fetch("http://127.0.0.1:8080/api/vendors/getmenu", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) throw new Error("Failed to fetch menu");
+
+    const menu = await response.json();
+    container.innerHTML = "";
+
+    if (menu.length === 0) {
+      container.innerHTML = "<p>No menu items available.</p>";
+      return;
+    }
+
+    const tableHTML = `
+      <div class="menu-table-container">
+        <table class="menu-table">
+          <thead>
+            <tr>
+              <th>Food Name</th>
+              <th>Type</th>
+              <th>Price (₹)</th>
+              <th>Ingredients</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${menu
+              .map(
+                item => `
+              <tr>
+                <td>${item.foodName}</td>
+                <td><span class="food-type-tag">${item.foodType}</span></td>
+                <td>${item.price}</td>
+                <td>
+                  <ul class="ingredients-list">
+                    ${item.ingredientNames
+                      .map(
+                        ing =>
+                          `<li>${ing.ingredientName} - ${ing.amount} ${ing.unitType}</li>`
+                      )
+                      .join("")}
+                  </ul>
+                </td>
+              </tr>
+            `
+              )
+              .join("")}
+          </tbody>
+        </table>
+      </div>
+    `;
+
+    container.innerHTML = tableHTML;
+  } catch (err) {
+    console.error("Error loading menu:", err);
+    container.innerHTML = "<p>Failed to load menu.</p>";
+  }
+}
+
+
 
 async function populateVendorInfo() {
   const token = localStorage.getItem("jwtToken")
