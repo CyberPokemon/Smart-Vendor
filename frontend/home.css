@@ -1,0 +1,249 @@
+/* Home page specific styles */
+
+.hero {
+  background: linear-gradient(135deg, #f0f9ff 0%, #ecfdf5 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="%23000" opacity="0.02"/><circle cx="75" cy="75" r="1" fill="%23000" opacity="0.02"/><circle cx="50" cy="10" r="1" fill="%23000" opacity="0.02"/><circle cx="10" cy="60" r="1" fill="%23000" opacity="0.02"/><circle cx="90" cy="40" r="1" fill="%23000" opacity="0.02"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  line-height: 1.1;
+}
+
+.hero-subtitle {
+  font-size: 1.5rem;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.hero-description {
+  font-size: 1.125rem;
+  color: var(--text-muted);
+  margin-bottom: 3rem;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.7;
+}
+
+.cta-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.cta-buttons .btn {
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: var(--radius-xl);
+  transition: all 0.3s ease;
+}
+
+.cta-buttons .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-xl);
+}
+
+/* How it works section */
+.how-it-works {
+  background: var(--bg-primary);
+}
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2.5rem;
+}
+
+.step-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 2.5rem;
+  text-align: center;
+  position: relative;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.step-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-xl);
+  border-color: var(--primary);
+}
+
+.step-icon {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  font-size: 2rem;
+  color: white;
+  box-shadow: var(--shadow-lg);
+}
+
+.step-number {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  background: var(--gradient-primary);
+  color: white;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  font-weight: 700;
+  box-shadow: var(--shadow-md);
+}
+
+.step-title {
+  font-size: 1.375rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+}
+
+.step-description {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Features section */
+.features {
+  background: var(--bg-secondary);
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+.feature-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 2.5rem;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-xl);
+  border-color: var(--secondary);
+}
+
+.feature-icon {
+  font-size: 2.5rem;
+  color: var(--secondary);
+  margin-bottom: 1.5rem;
+  display: block;
+}
+
+.feature-title {
+  font-size: 1.375rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+}
+
+.feature-description {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.25rem;
+  }
+
+  .hero-description {
+    font-size: 1rem;
+  }
+
+  .cta-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .cta-buttons .btn {
+    padding: 0.875rem 1.5rem;
+    font-size: 0.875rem;
+  }
+
+  .steps-grid,
+  .features-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .step-card,
+  .feature-card {
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    padding: 3rem 1rem;
+  }
+
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .step-card,
+  .feature-card {
+    padding: 1.5rem;
+  }
+
+  .step-icon {
+    width: 4rem;
+    height: 4rem;
+    font-size: 1.5rem;
+  }
+
+  .step-number {
+    width: 2rem;
+    height: 2rem;
+    font-size: 0.75rem;
+  }
+}

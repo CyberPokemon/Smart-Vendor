@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Submission Successful</title>
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background: linear-gradient(to right, #00b894, #00cec9);
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      flex-direction: column;
+      text-align: center;
+    }
+    h1 {
+      font-size: 40px;
+      margin-bottom: 10px;
+    }
+    p {
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <h1>✅ Submitted Successfully!</h1>
+  <p>Redirecting to dashboard...</p>
+  <script>
+    setTimeout(() => {
+      window.location.href = "vendor-dashboard.html"; // change this to your actual dashboard page
+    }, 3000);
+  </script>
+</body>
+</html>

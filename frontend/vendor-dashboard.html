@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendor Dashboard - StreetSource</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="vendor-dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="api-config.js"></script>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="index.html" class="back-link">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Back to Home</span>
+                </a>
+                <div class="nav-divider"></div>
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <span class="logo-text">StreetSource</span>
+                </div>
+            </div>
+            <div class="nav-right">
+                <div class="badge badge-primary">Vendor Dashboard</div>
+                <div id="userMenu" class="user-menu">
+                    <span id="userName">Vendor</span>
+                    <button id="logoutBtn" class="btn btn-outline btn-sm">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <!-- Welcome Banner -->
+        <div class="welcome-banner">
+            <div class="banner-content">
+                <h1 class="banner-title">Welcome back, <span id="vendorName">Vendor</span>!</h1>
+                <p class="banner-description">
+                    <strong>Business:</strong> <span id="vendorBusiness">Your Business</span><br>
+                    <strong>Address:</strong> <span id="vendorAddress">Your Address</span>
+                </p>
+
+                <p class="banner-description">Enter your raw material Consumption and get AI-powered predictions for raw
+                    materials</p>
+            </div>
+
+        </div>
+
+
+
+
+        <!-- Menu Section -->
+        <div class="menu-section">
+            <h2 class="section-title">Your Menu</h2>
+            <div id="menuItemsContainer" class="menu-items-grid">
+                <!-- Menu items will be injected here -->
+            </div>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="dashboard-actions">
+            <button onclick="window.location.href='rawmaterials_predictor.html'" class="btn btn-primary">
+                <i class="fas fa-robot"></i>  Raw Material Entry and AI Predictions
+            </button>
+        </div>
+
+    </div>
+    <script src="vendor-dashboard.js"></script>
+</body>
+
+</html>
