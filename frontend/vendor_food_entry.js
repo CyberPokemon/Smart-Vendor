@@ -236,6 +236,8 @@ function addFoodForm() {
       <option value="veg">Veg</option>
       <option value="non-veg">Non-Veg</option>
     </select>
+    <label>Food Price:</label>
+    <input type="number" name="foodPrice-${currentFoodIndex}" required />
 
     <div id="ingredients-${currentFoodIndex}">
       <label>Ingredients:</label>
@@ -296,6 +298,7 @@ function submitAllData() {
     const foodSection = document.getElementById(`food-${i}`);
     const foodName = foodSection.querySelector(`[name="foodName-${i}"]`).value.trim();
     const foodType = foodSection.querySelector(`[name="foodType-${i}"]`).value;
+    const foodprice = foodSection.querySelector(`[name="foodPrice-${i}"]`).value;
 
     const ingredients = [];
     const names = foodSection.querySelectorAll(".ingredient-name");
@@ -314,11 +317,19 @@ function submitAllData() {
       }
     }
 
+    // allData.push({
+    //   foodName,
+    //   foodType,
+    //   ingredients
+    // });
+
     allData.push({
       foodName,
       foodType,
+      price: parseFloat(foodprice),
       ingredients
     });
+    
   }
 
   // Hide form and preview
@@ -405,13 +416,14 @@ function showPreview(data) {
     const formattedData = data.map(item => ({
       foodName: item.foodName,
       foodType: item.foodType,
-      price: 0, // you can let users enter this later
+      price: item.price, // ✅ include price
       ingredientNames: item.ingredients.map(ing => ({
         ingredientName: ing.name,
         amount: parseFloat(ing.quantity),
         unitType: ing.unit
       }))
     }));
+    
 
     try {
       const response = await fetch("http://127.0.0.1:8080/api/vendors/syncmenu", {

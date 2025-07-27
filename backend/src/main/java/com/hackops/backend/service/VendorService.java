@@ -319,6 +319,11 @@ public class VendorService {
     }
 
 
+    public UserDetailsResponseDto getUserDetails(String username) {
+        Users user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
+        return new UserDetailsResponseDto(user.getUsername(),user.getName(), user.getEmailAddress(), user.getAddresss(),user.getBusinessname());
 
+    }
 }
