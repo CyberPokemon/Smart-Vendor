@@ -179,6 +179,19 @@ public class VendorController {
         }
     }
 
+    @GetMapping("/getuserdetails")
+    public ResponseEntity<?> getUserDetails(@RequestHeader("Authorization") String token)
+    {
+        String username = jwtService.extractUsername(token.substring(7));
+
+        try{
+            UserDetailsResponseDto userdetails = vendorService.getUserDetails(username);
+            return ResponseEntity.ok(userdetails);
+        }
+        catch (Exception e) {
+            return ResponseEntity.badRequest().body(new ApiResponseMessageDTO(e.getMessage()));
+        }
+    }
 
 
 }
