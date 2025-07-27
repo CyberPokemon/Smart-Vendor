@@ -105,117 +105,6 @@ submitAllBtn.addEventListener("click", async () => {
   }
 });
 
-
-// async function loadIngredientNames() {
-//   const dropdown = document.getElementById("materialName");
-//   const token = localStorage.getItem("jwtToken");
-
-//   if (!token) {
-//     alert("User not authenticated. Please login again.");
-//     return;
-//   }
-
-//   try {
-//     const response = await fetch("http://127.0.0.1:8080/api/vendors/getingredientnames", {
-//       method: "GET",
-//       headers: {
-//         "Authorization": `Bearer ${token}`
-//       }
-//     });
-
-//     if (!response.ok) {
-//       throw new Error("Failed to load ingredient names");
-//     }
-
-//     const ingredientNames = await response.json();
-
-//     ingredientNames.forEach(name => {
-//       const option = document.createElement("option");
-//       option.value = name;
-//       option.textContent = name;
-//       dropdown.appendChild(option);
-//     });
-//   } catch (error) {
-//     console.error("Error loading ingredients:", error);
-//     alert("Unable to load ingredient names.");
-//   }
-// }
-
-
-
-// addEntryBtn.addEventListener("click", () => {
-//   const date = document.getElementById("entryDate").value;
-//   const name = document.getElementById("materialName").value.trim();
-//   const bought = parseFloat(document.getElementById("quantityBought").value);
-//   const used = parseFloat(document.getElementById("quantityUsed").value);
-//   const price = parseFloat(document.getElementById("materialPrice").value);
-
-//   if (!date || !name || isNaN(bought) || isNaN(used) || isNaN(price)) {
-//     alert("Please fill all fields correctly.");
-//     return;
-//   }
-
-//   const entry = { date, name, bought, used, price };
-//   rawMaterialData.push(entry);
-//   updateHistoryTable();
-//   clearForm();
-// });
-
-
-// addEntryBtn.addEventListener("click", async () => {
-//     const date = document.getElementById("entryDate").value;
-//     const name = document.getElementById("materialName").value.trim();
-//     const bought = parseFloat(document.getElementById("quantityBought").value);
-//     const used = parseFloat(document.getElementById("quantityUsed").value);
-//     const price = parseFloat(document.getElementById("materialPrice").value);
-  
-//     if (!date || !name || isNaN(bought) || isNaN(used) || isNaN(price)) {
-//       alert("Please fill all fields correctly.");
-//       return;
-//     }
-  
-//     const token = localStorage.getItem("jwtToken");
-//     if (!token) {
-//       alert("User not authenticated. Please login again.");
-//       return;
-//     }
-  
-//     const entryPayload = {
-//       entries: [{
-//         ingredientName: name,
-//         quantityBought: bought,
-//         quantityUsed: used,
-//         price: price,
-//         date: date
-//       }]
-//     };
-  
-//     try {
-//       const response = await fetch("http://127.0.0.1:8080/api/vendors/setdailyusage", {
-//         method: "POST",
-//         headers: {
-//           "Content-Type": "application/json",
-//           "Authorization": `Bearer ${token}`
-//         },
-//         body: JSON.stringify(entryPayload)
-//       });
-  
-//       if (!response.ok) {
-//         const errText = await response.text();
-//         throw new Error(errText);
-//       }
-  
-//       rawMaterialData.push({ date, name, bought, used, price });
-//       updateHistoryTable();
-//       clearForm();
-  
-//       alert("Entry saved successfully!");
-//     } catch (err) {
-//       console.error("Error saving entry:", err);
-//       alert("Failed to save entry: " + err.message);
-//     }
-//   });
-  
 function updateHistoryTable() {
   const historyTableBody = document.getElementById("historyTableBody");
 
@@ -241,30 +130,46 @@ function clearForm() {
   document.getElementById("materialPrice").value = "";
 }
 
-predictBtn.addEventListener("click", () => {
-  if (rawMaterialData.length === 0) {
-    predictionOutput.innerHTML = "<p>No data available for prediction.</p>";
+predictBtn.addEventListener("click", async () => {
+  const token = localStorage.getItem("jwtToken");
+  if (!token) {
+    alert("User not authenticated.");
     return;
   }
 
-  const materialMap = {};
+  try {
+    const response = await fetch("http://127.0.0.1:8080/api/vendors/predictionai", {
+      method: "GET",
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    });
 
-  rawMaterialData.forEach(({ name, used }) => {
-    if (!materialMap[name]) {
-      materialMap[name] = { totalUsed: 0, days: 0 };
-    }
-    materialMap[name].totalUsed += used;
-    materialMap[name].days += 1;
-  });
+    if (!response.ok) throw new Error("Failed to fetch prediction data.");
 
-  let html = `<h4>Predicted Raw Material Requirement for Next 7 Days</h4><ul>`;
-  for (const material in materialMap) {
-    const avgDailyUse = materialMap[material].totalUsed / materialMap[material].days;
-    const predicted7DayUse = (avgDailyUse * 7).toFixed(2);
-    html += `<li><strong>${material}</strong>: ${predicted7DayUse} kg</li>`;
+    const data = await response.json();
+
+    let html = `<h4>Predicted Raw Material Requirement for Next 7 Days</h4>`;
+
+    html += `<div class="table-container"><table class="data-table"><thead><tr><th>Date</th><th>Ingredient</th><th>Required Quantity (kg)</th></tr></thead><tbody>`;
+
+    Object.entries(data).forEach(([date, ingredients]) => {
+      Object.entries(ingredients).forEach(([ingredient, quantity]) => {
+        html += `<tr>
+          <td>${date}</td>
+          <td>${ingredient}</td>
+          <td>${quantity.toFixed(2)}</td>
+        </tr>`;
+      });
+    });
+
+    html += `</tbody></table></div>`;
+
+    predictionOutput.innerHTML = html;
+  } catch (err) {
+    console.error("Prediction error:", err);
+    predictionOutput.innerHTML = `<p style="color: red;">Failed to fetch prediction data.</p>`;
   }
-  html += `</ul>`;
-  predictionOutput.innerHTML = html;
 });
 
 const filterType = document.getElementById("filterType");
