@@ -26,7 +26,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - StreetSource</title>
+    <title>Login - Smart Vendor</title>
     <link rel="stylesheet" href="sliding-auth.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -40,24 +40,11 @@
                     <div class="logo-icon">
                         <i class="fas fa-shopping-cart"></i>
                     </div>
-                    <span class="logo-text">StreetSource</span>
+                    <span class="logo-text">Smart Vendor</span>
                 </div>
                 <h1>Create Account</h1>
-                <p>Choose how you'd like to register</p>
 
                 <div class="register-options">
-                    <button type="button" class="social-btn google" onclick="socialLogin('google')">
-                        <i class="fab fa-google"></i>
-                        Continue with Google
-                    </button>
-
-                    <button type="button" class="social-btn facebook" onclick="socialLogin('facebook')">
-                        <i class="fab fa-facebook-f"></i>
-                        Continue with Facebook
-                    </button>
-
-                    <div class="divider">OR</div>
-
                     <button type="button" onclick="goToRegister()">
                         <i class="fas fa-user-plus"></i>
                         Continue with Email
@@ -73,7 +60,7 @@
                     <div class="logo-icon">
                         <i class="fas fa-shopping-cart"></i>
                     </div>
-                    <span class="logo-text">StreetSource</span>
+                    <span class="logo-text">Smart Vendor</span>
                 </div>
                 <h1>Welcome Back</h1>
                 <p>Sign in to your account to continue</p>
@@ -112,7 +99,8 @@
             </div>
         </div>
     </div>
-
+    
+    <script src="config.js"></script>
     <script>
         // Sliding panel functionality
         const signUpButton = document.getElementById('signUp');
@@ -186,7 +174,7 @@
             };
 
             try {
-                const response = await fetch('http://127.0.0.1:8080/api/auth/login', {
+                const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
