@@ -1,0 +1,99 @@
+/* Reset & Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+body {
+  height: 100vh;
+  background-image: url('https://images.unsplash.com/photo-1525059337994-6f2a1311b4d4'); /* You can replace with your own image */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: background 0.8s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Outer Blur Glass Layer */
+.register-container {
+  backdrop-filter: blur(6px);
+  background: rgba(255, 255, 255, 0.15);
+  padding: 50px;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  transition: all 0.4s ease-in-out;
+}
+
+/* Inner Form Box */
+.register-box {
+  background-color: rgba(255, 255, 255, 0.88);
+  padding: 30px;
+  border-radius: 12px;
+  width: 350px;
+  text-align: center;
+  transition: transform 0.4s ease-in-out;
+}
+
+.register-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
+}
+
+/* Heading */
+h2 {
+  margin-bottom: 20px;
+  color: #222;
+}
+
+/* Form Inputs */
+form input {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+form input:focus {
+  border-color: #457b9d;
+  box-shadow: 0 0 5px rgba(69, 123, 157, 0.5);
+  outline: none;
+}
+
+/* Submit Button */
+button {
+  width: 100%;
+  padding: 12px;
+  background-color: #1d3557;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  margin-top: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #16324f;
+}
+
+/* Bottom Link */
+.login-text {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #444;
+}
+
+.login-text a {
+  color: #1d3557;
+  text-decoration: none;
+  font-weight: bold;
+}
