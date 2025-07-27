@@ -1,27 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Street Food Login</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StreetSource - Empowering Street Food Vendors</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-  <div class="food-icons">
-    <img src="https://img.freepik.com/free-photo/burger-with-cheese-tomato_144627-15876.jpg" alt="Burger">
-    <img src="https://img.freepik.com/free-photo/chicken-skewers-with-slices-sweet-peppers-dish_1150-19728.jpg" alt="Kebab">
-    <img src="https://img.freepik.com/free-photo/indian-food_53876-29545.jpg" alt="Indian Food">
-  </div>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <span class="logo-text">StreetSource</span>
+                </div>
+            </div>
+            <div class="nav-right">
+                <a href="about.html" class="nav-link">About</a>
+                <div id="authButtons" class="auth-buttons">
+                    <a href="login.html" class="btn btn-outline btn-sm">Login</a>
+                    <a href="register.html" class="btn btn-primary btn-sm">Sign Up</a>
+                </div>
+                <div id="userMenu" class="user-menu" style="display: none;">
+                    <div class="user-info">
+                        <span id="userName">User</span>
+                        <button id="logoutBtn" class="btn btn-outline btn-sm">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
 
-  <div class="login-container">
-    <h2>Vendor Login</h2>
-    <form>
-      <input type="text" placeholder="Username" required />
-      <input type="password" placeholder="Password" required />
-      <button type="submit">Login</button>
-    </form>
-    <div class="extra-links">
-      <p>Don’t have an  account? <a href="#">Register</a></p>
-    </div>
-  </div>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="gradient-text">StreetSource</span>
+                </h1>
+                <p class="hero-subtitle">
+                    AI-Powered Raw Material Prediction for Street Food Vendors
+                </p>
+                <p class="hero-description">
+                    Track your daily sales, get AI predictions for raw material needs
+                </p>
+
+                <div class="cta-buttons">
+                    <a href="vendor-dashboard.html" class="btn btn-primary">
+                        Start Tracking Sales
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <a href="login.html" class="btn btn-secondary">
+                        Register as Vendor
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">How It Works</h2>
+                <p class="section-description">
+                    Simple 2-step process to optimize your raw material management
+                </p>
+            </div>
+
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="step-number">01</div>
+                    <h3 class="step-title">Track Daily Sales</h3>
+                    <p class="step-description">Enter your daily food sales and raw material usage</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <div class="step-number">02</div>
+                    <h3 class="step-title">Get AI Predictions</h3>
+                    <p class="step-description">Our AI analyzes patterns and predicts your material needs</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Why Choose StreetSource?</h2>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3 class="feature-title">AI-Powered Predictions</h3>
+                    <p class="feature-description">Smart algorithms predict your raw material needs based on sales patterns</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h3 class="feature-title">Sales Analytics</h3>
+                    <p class="feature-description">Track your business performance with detailed analytics</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
 </body>
+</html>
