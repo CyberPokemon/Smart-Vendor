@@ -56,8 +56,8 @@ public class AuthenticationService {
                     "Same Email ID already Exist");
         }
 
-        Users user = new Users(request.getUsername(), request.getName(), request.getEmail(), request.getAddress(), request.getCity(), request.getState(), request.getPincode(), bCryptPasswordEncoder.encode(request.getPassword()),request.getRole(), LocalDateTime.now());
-
+//        Users user = new Users(request.getUsername(), request.getName(), request.getEmail(), request.getAddress(), request.getCity(), request.getState(), request.getPincode(), bCryptPasswordEncoder.encode(request.getPassword()),request.getRole(), LocalDateTime.now());
+        Users user = new Users(request.getUsername(), request.getName(), request.getEmail(), request.getAddress(), request.getBusinessname(), bCryptPasswordEncoder.encode(request.getPassword()), request.getRole(), LocalDateTime.now());
         usersRepository.save(user);
 
         String jwttoken = jwtService.generateToken(user.getUsername());

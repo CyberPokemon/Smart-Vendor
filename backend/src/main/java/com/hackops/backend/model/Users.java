@@ -20,43 +20,70 @@ public class Users {
     private String emailAddress;
     @Column(nullable = false)
     private String addresss;
+//    @Column(nullable = false)
+//    private String city;
+//    @Column(nullable = false)
+//    private String state;
+//    @Column(nullable = false)
+//    private int pincode;
+
     @Column(nullable = false)
-    private String city;
-    @Column(nullable = false)
-    private String state;
-    @Column(nullable = false)
-    private int pincode;
+    private String businessname;
     @Column(nullable = false)
     private String password;
 
     @Column(nullable = false)
-    private String role; //admin or participants
+    private String role;
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
 
-    public Users(long userId, String username, String name, String emailAddress, String addresss, String city, String state, int pincode, String password, String role, LocalDateTime createdAt) {
+//    public Users(long userId, String username, String name, String emailAddress, String addresss, String city, String state, int pincode, String password, String role, LocalDateTime createdAt) {
+//        this.userId = userId;
+//        this.username = username;
+//        this.name = name;
+//        this.emailAddress = emailAddress;
+//        this.addresss = addresss;
+//        this.city = city;
+//        this.state = state;
+//        this.pincode = pincode;
+//        this.password = password;
+//        this.role = role;
+//        this.createdAt = createdAt;
+//    }
+//
+//    public Users(String username, String name, String emailAddress, String addresss, String city, String state, int pincode, String password, String role, LocalDateTime createdAt) {
+//        this.username = username;
+//        this.name = name;
+//        this.emailAddress = emailAddress;
+//        this.addresss = addresss;
+//        this.city = city;
+//        this.state = state;
+//        this.pincode = pincode;
+//        this.password = password;
+//        this.role = role;
+//        this.createdAt = createdAt;
+//    }
+
+
+    public Users(long userId, String username, String name, String emailAddress, String addresss, String businessname, String password, String role, LocalDateTime createdAt) {
         this.userId = userId;
         this.username = username;
         this.name = name;
         this.emailAddress = emailAddress;
         this.addresss = addresss;
-        this.city = city;
-        this.state = state;
-        this.pincode = pincode;
+        this.businessname = businessname;
         this.password = password;
         this.role = role;
         this.createdAt = createdAt;
     }
 
-    public Users(String username, String name, String emailAddress, String addresss, String city, String state, int pincode, String password, String role, LocalDateTime createdAt) {
+    public Users(String username, String name, String emailAddress, String addresss, String businessname, String password, String role, LocalDateTime createdAt) {
         this.username = username;
         this.name = name;
         this.emailAddress = emailAddress;
         this.addresss = addresss;
-        this.city = city;
-        this.state = state;
-        this.pincode = pincode;
+        this.businessname = businessname;
         this.password = password;
         this.role = role;
         this.createdAt = createdAt;
@@ -129,27 +156,35 @@ public class Users {
         this.createdAt = createdAt;
     }
 
-    public String getCity() {
-        return city;
+    public String getBusinessname() {
+        return businessname;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setBusinessname(String businessname) {
+        this.businessname = businessname;
     }
 
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public int getPincode() {
-        return pincode;
-    }
-
-    public void setPincode(int pincode) {
-        this.pincode = pincode;
-    }
+    //    public String getCity() {
+//        return city;
+//    }
+//
+//    public void setCity(String city) {
+//        this.city = city;
+//    }
+//
+//    public String getState() {
+//        return state;
+//    }
+//
+//    public void setState(String state) {
+//        this.state = state;
+//    }
+//
+//    public int getPincode() {
+//        return pincode;
+//    }
+//
+//    public void setPincode(int pincode) {
+//        this.pincode = pincode;
+//    }
 }

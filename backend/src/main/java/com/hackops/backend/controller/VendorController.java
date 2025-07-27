@@ -91,7 +91,7 @@ public class VendorController {
 
         try
         {
-            vendorService.saveDailyUsage(username, request.getEntries());
+            vendorService.saveDailyUsage(username, request.getEntries(),request.getMessageFromVendor());
             return ResponseEntity.ok(new ApiResponseMessageDTO("Ingredient usage recorded successfully"));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new ApiResponseMessageDTO(e.getMessage()));
@@ -127,7 +127,7 @@ public class VendorController {
     {
         String username = jwtService.extractUsername(token.substring(7));
         try{
-            Map<String, Map<String, List<Double>>> prediction = geminiService.predictIngriendlist(username);
+            Map<String, Map<String, Double>>prediction = geminiService.predictIngriendlist(username);
             return ResponseEntity.ok(prediction);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new ApiResponseMessageDTO(e.getMessage()));
@@ -159,6 +159,18 @@ public class VendorController {
             return ResponseEntity.badRequest().body(new ApiResponseMessageDTO(e.getMessage()));
         }
     }
+
+    @GetMapping("/getingredientnames")
+    public ResponseEntity<?> getIngredientNames(@RequestHeader("Authorization") String token) {
+        String username = jwtService.extractUsername(token.substring(7));
+        try {
+            List<String> ingredients = vendorService.getIngredientNamesByUsername(username);
+            return ResponseEntity.ok(ingredients);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(new ApiResponseMessageDTO(e.getMessage()));
+        }
+    }
+
 
 
 }

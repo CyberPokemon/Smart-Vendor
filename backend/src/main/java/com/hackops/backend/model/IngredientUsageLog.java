@@ -23,23 +23,29 @@ public class IngredientUsageLog {
 
     private double quantityUsed;
 
+    private double price;
+
     @Column(nullable = false)
     private LocalDate date;
 
-    public IngredientUsageLog(Long id, Users user, String ingredientName, double quantityBought, double quantityUsed, LocalDate date) {
+    private String messageFromVendor;
+
+    public IngredientUsageLog(Long id, Users user, String ingredientName, double quantityBought, double quantityUsed, double price, LocalDate date) {
         this.id = id;
         this.user = user;
         this.ingredientName = ingredientName;
         this.quantityBought = quantityBought;
         this.quantityUsed = quantityUsed;
+        this.price = price;
         this.date = date;
     }
 
-    public IngredientUsageLog(Users user, String ingredientName, double quantityBought, double quantityUsed, LocalDate date) {
+    public IngredientUsageLog(Users user, String ingredientName, double quantityBought, double quantityUsed, double price, LocalDate date) {
         this.user = user;
         this.ingredientName = ingredientName;
         this.quantityBought = quantityBought;
         this.quantityUsed = quantityUsed;
+        this.price = price;
         this.date = date;
     }
 
@@ -92,5 +98,21 @@ public class IngredientUsageLog {
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public String getMessageFromVendor() {
+        return messageFromVendor;
+    }
+
+    public void setMessageFromVendor(String messageFromVendor) {
+        this.messageFromVendor = messageFromVendor;
     }
 }

@@ -15,23 +15,36 @@ public class VendorDetails {
     private Users user;
 
     private String typesOfFood;
-    private String vegNonVeg;
+//    private String vegNonVeg;
 
-    public VendorDetails(Long id, Users user, String typesOfFood, String vegNonVeg) {
-        this.id = id;
-        this.user = user;
-        this.typesOfFood = typesOfFood;
-        this.vegNonVeg = vegNonVeg;
-    }
+//    public VendorDetails(Long id, Users user, String typesOfFood, String vegNonVeg) {
+//        this.id = id;
+//        this.user = user;
+//        this.typesOfFood = typesOfFood;
+//        this.vegNonVeg = vegNonVeg;
+//    }
+//
+//    public VendorDetails(Users user, String typesOfFood, String vegNonVeg) {
+//        this.user = user;
+//        this.typesOfFood = typesOfFood;
+//        this.vegNonVeg = vegNonVeg;
+//    }
 
-    public VendorDetails(Users user, String typesOfFood, String vegNonVeg) {
-        this.user = user;
-        this.typesOfFood = typesOfFood;
-        this.vegNonVeg = vegNonVeg;
-    }
 
     public VendorDetails() {
     }
+
+    public VendorDetails(Long id, Users user, String typesOfFood) {
+        this.id = id;
+        this.user = user;
+        this.typesOfFood = typesOfFood;
+    }
+
+    public VendorDetails(Users user, String typesOfFood) {
+        this.user = user;
+        this.typesOfFood = typesOfFood;
+    }
+
 
     public Long getId() {
         return id;
@@ -56,12 +69,13 @@ public class VendorDetails {
     public void setTypesOfFood(String typesOfFood) {
         this.typesOfFood = typesOfFood;
     }
-
-    public String getVegNonVeg() {
-        return vegNonVeg;
-    }
-
-    public void setVegNonVeg(String vegNonVeg) {
-        this.vegNonVeg = vegNonVeg;
-    }
 }
+
+//    public String getVegNonVeg() {
+//        return vegNonVeg;
+//    }
+//
+//    public void setVegNonVeg(String vegNonVeg) {
+//        this.vegNonVeg = vegNonVeg;
+//    }
+//}
