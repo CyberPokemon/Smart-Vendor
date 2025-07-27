@@ -5,6 +5,9 @@ const vendorMessageInput = document.getElementById("vendorMessage");
 
 let allIngredients = [];
 
+let rawMaterialData = [];
+
+
 window.addEventListener("DOMContentLoaded", async () => {
   await loadIngredientTable();
 });
@@ -159,61 +162,63 @@ submitAllBtn.addEventListener("click", async () => {
 // });
 
 
-addEntryBtn.addEventListener("click", async () => {
-    const date = document.getElementById("entryDate").value;
-    const name = document.getElementById("materialName").value.trim();
-    const bought = parseFloat(document.getElementById("quantityBought").value);
-    const used = parseFloat(document.getElementById("quantityUsed").value);
-    const price = parseFloat(document.getElementById("materialPrice").value);
+// addEntryBtn.addEventListener("click", async () => {
+//     const date = document.getElementById("entryDate").value;
+//     const name = document.getElementById("materialName").value.trim();
+//     const bought = parseFloat(document.getElementById("quantityBought").value);
+//     const used = parseFloat(document.getElementById("quantityUsed").value);
+//     const price = parseFloat(document.getElementById("materialPrice").value);
   
-    if (!date || !name || isNaN(bought) || isNaN(used) || isNaN(price)) {
-      alert("Please fill all fields correctly.");
-      return;
-    }
+//     if (!date || !name || isNaN(bought) || isNaN(used) || isNaN(price)) {
+//       alert("Please fill all fields correctly.");
+//       return;
+//     }
   
-    const token = localStorage.getItem("jwtToken");
-    if (!token) {
-      alert("User not authenticated. Please login again.");
-      return;
-    }
+//     const token = localStorage.getItem("jwtToken");
+//     if (!token) {
+//       alert("User not authenticated. Please login again.");
+//       return;
+//     }
   
-    const entryPayload = {
-      entries: [{
-        ingredientName: name,
-        quantityBought: bought,
-        quantityUsed: used,
-        price: price,
-        date: date
-      }]
-    };
+//     const entryPayload = {
+//       entries: [{
+//         ingredientName: name,
+//         quantityBought: bought,
+//         quantityUsed: used,
+//         price: price,
+//         date: date
+//       }]
+//     };
   
-    try {
-      const response = await fetch("http://127.0.0.1:8080/api/vendors/setdailyusage", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-        },
-        body: JSON.stringify(entryPayload)
-      });
+//     try {
+//       const response = await fetch("http://127.0.0.1:8080/api/vendors/setdailyusage", {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json",
+//           "Authorization": `Bearer ${token}`
+//         },
+//         body: JSON.stringify(entryPayload)
+//       });
   
-      if (!response.ok) {
-        const errText = await response.text();
-        throw new Error(errText);
-      }
+//       if (!response.ok) {
+//         const errText = await response.text();
+//         throw new Error(errText);
+//       }
   
-      rawMaterialData.push({ date, name, bought, used, price });
-      updateHistoryTable();
-      clearForm();
+//       rawMaterialData.push({ date, name, bought, used, price });
+//       updateHistoryTable();
+//       clearForm();
   
-      alert("Entry saved successfully!");
-    } catch (err) {
-      console.error("Error saving entry:", err);
-      alert("Failed to save entry: " + err.message);
-    }
-  });
+//       alert("Entry saved successfully!");
+//     } catch (err) {
+//       console.error("Error saving entry:", err);
+//       alert("Failed to save entry: " + err.message);
+//     }
+//   });
   
 function updateHistoryTable() {
+  const historyTableBody = document.getElementById("historyTableBody");
+
   historyTableBody.innerHTML = "";
   rawMaterialData.forEach((entry) => {
     const row = document.createElement("tr");
@@ -319,7 +324,7 @@ filterBtn.addEventListener("click", async () => {
       name: entry.ingredientName,
       bought: entry.quantityBought,
       used: entry.quantityUsed,
-      price: entry.price  // backend doesn't return price
+      price: entry.price || 0   // backend doesn't return price
     }));
 
     updateHistoryTable();
